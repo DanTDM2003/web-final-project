@@ -8,8 +8,8 @@
 
             <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                 <div class="navbar-nav m-auto">
-                    <a href="index.html" class="nav-item nav-link active">Home</a>
-                    <a href="product-list.html" class="nav-item nav-link">Products</a>
+                    <a href="/" class="nav-item nav-link <%= url === '/' ? 'active' : '' %>">Home</a>
+                    <a href="/products" class="nav-item nav-link <%= url === '/products' ? 'active' : '' %>">Products</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
                         <div class="dropdown-menu">
@@ -22,7 +22,7 @@
                             <a href="my-account.html" class="dropdown-item">My Account</a>
                         </div>
                     </div>
-                    <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                    <a href="/contact" class="nav-item nav-link <%= url === '/contact' ? 'active' : '' %>">Contact Us</a>
                 </div>
             </div>
         </nav>

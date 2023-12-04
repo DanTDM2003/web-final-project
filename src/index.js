@@ -23,19 +23,7 @@ app.use(express.json());
 
 viewEngine(app);
 
-// app.use(require('./routes/web.js'));
-
-app.get('/', (req, res) => {
-    res.render('checkout');
-});
-
-app.get('/login', (req, res) => {
-    res.render('login');
-});
-
-app.get('/products', (req, res) => {
-    res.render('product/index');
-});
+app.use(require('./routes/web.js'));
 
 app.listen(port, host, () => {
     console.log("Server has started.");
