@@ -1,13 +1,10 @@
 require('dotenv').config();
 const express = require('express');
-
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const bcrypt = require('bcrypt');
-
-const viewEngine = require('./config/viewEngine.js');
 
 const app = express();
+const viewEngine = require('./config/viewEngine.js');
 const port = process.env.PORT;
 const host = process.env.HOST;
 const secret = 'mysecret';

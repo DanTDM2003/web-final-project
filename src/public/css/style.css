@@ -1561,7 +1561,10 @@ button.btn {
     padding: 60px 0;
 }
 
-
+.register {
+    position: relative;
+    padding: 40px 0;
+}
 
 /**********************************/
 /********** Footer CSS ************/

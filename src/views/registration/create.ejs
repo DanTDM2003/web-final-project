@@ -15,48 +15,48 @@
 <!-- Breadcrumb End -->
 
 
-<!-- Login Start -->
-<div class="login">
-    <div style="padding-top: 100px; padding-bottom: 100px;" class="container border border-3 rounded-3">
+<!-- Register Start -->
+<div class="register">  
+    <div style="padding-top: 80px; padding-bottom: 80px;" class="container border border-3 rounded-3">
         <div class="section-header">
-            <h3>Welcome To Our Ecommerce Website</h3>
+            <h3>Welcome To Registration Website</h3>
             <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec viverra at massa sit amet ultricies. Nullam consequat, mauris non interdum cursus
             </p>
         </div>
-
-        <div class="w-100">
-            <form method="POST" action="/login" class="login-form">
-                <div class="d-flex flex-column align-items-center justify-content-center">
+        <div class="w-100">    
+            <form method="POST" action="/register" class="register-form">
+                <div class="d-flex flex-column align-items-center justify-content-center w-100">
                     <div class="d-flex flex-column align-items-center justify-content-center w-100">
                         <div class="w-50">
-                            <label for="Email">E-mail</label>
-                            <input class="form-control" name="Email" id="Email" type="email" placeholder="Email..." required>
+                            <label for="Fullname">Fullname</label>
+                            <input class="form-control" name="Fullname" id="Fullname" type="text" placeholder="Fullname..." required>
+                        </div>
+                        <div class="w-50">
+                            <label for="Username">Username</label>
+                            <input class="form-control" name="Username" id="Username" type="text" placeholder="Username..." required>
                         </div>
                         <div class="w-50">
                             <label for="Password">Password</label>
                             <input class="form-control" name="Password" id="Password" type="password" placeholder="Password..." required>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Keep me signed in</label>
-                            </div>
-                        </div> -->
-                        <span class="w-50" style="font-size: 13px;">Don't have an account? <a href="/register">Sign up</a></span>
+                        <div class="w-50">
+                            <label for="Email">E-mail</label>
+                            <input class="form-control" name="Email" id="Email" type="email" placeholder="E-mail..." required>
+                        </div>
+                        <span class="w-50" style="font-size: 13px;">Already have an account? <a href="/login">Sign in</a></span>
                         <% if (error) { %>
                             <span class="w-50 text-danger" style="font-size: 13px;"><%= error %></span>
                         <% } %>
                     </div>
-                    
                     <div class="w-50 mt-4">
-                        <button class="btn">Login</button>
+                        <button class="btn">Sign up</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- Login End -->
+<!-- Register End -->
 
 <%- include('../partials/footer.ejs') %>
