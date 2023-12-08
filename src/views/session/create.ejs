@@ -51,8 +51,8 @@
                         </div> -->
                         <span class="w-50" style="font-size: 13px;">Don't have an account? <a href="/register">Sign up</a></span>
                         
-                        <% if (error) { %>
-                            <span class="w-50 text-danger" style="font-size: 13px;"><%= error %></span>
+                        <% for (let error in errors) { %>
+                            <span class="w-50 text-danger" style="font-size: 13px;"><%= errors[error] %></span>
                         <% } %>
                     </div>
                     

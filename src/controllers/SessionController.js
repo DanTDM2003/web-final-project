@@ -1,11 +1,7 @@
 const he = require('he');
-const bcrypt = require('bcrypt');
 
-const Users = require('../models/Users.js');
-const Validator = require('../utilities/Validator.js');
-const JWTAction = require('../utilities/JWTAction.js');
-const Cookie = require('../utilities/Cookies.js');
-
+const LoginForm = require('../utilities/Forms/LoginForm.js');
+const Authenticator = require('../utilities/Authenticator.js');
 
 module.exports = {
     create: async (req, res) => {
@@ -15,7 +11,7 @@ module.exports = {
         
         res.render('session/create.ejs', {
             title: 'Login',
-            error: '',
+            errors: null,
             login: null,
             url: req.path
         });
@@ -26,62 +22,40 @@ module.exports = {
             return res.redirect('/');
         }
 
-        const { Email, Password } = req.body;
+        const form = new LoginForm();
 
-        const encodedEmail = he.encode(Email);
-        const encodedPassword = he.encode(Password);
+        let { Email, Password } = req.body;
 
-        if (!Validator.stringValidate(encodedEmail)) {
-            return res.render('session/create.ejs', {
-                title: 'Login',
-                error: "Your email is not valid.",
-                login: null,
-                url: req.path
-            });
-        }
+        Email = he.encode(Email);
+        Password = he.encode(Password);
 
-        if (!Validator.stringValidate(encodedPassword)) {
-            return res.render('session/create.ejs', {
-                title: 'Login',
-                error: "Your email is not valid.",
-                login: null,
-                url: req.path
-            });
-        }
-        
-        const user = await Users.findOne(req.body);
-
-        if (!user) {
-            return res.render('session/create.ejs', {
-                title: 'Login',
-                error: "Your credential is not valid.",
-                login: null,
-                url: req.path
-            });
-        } else {
-            if (!bcrypt.compareSync(req.body.Password, user.Password)) {
-                return res.render('session/create.ejs', {
-                    title: 'Login',
-                    error: "Your credential is not valid.",
-                    login: null,
-                    url: req.path
-                });
+        if (form.validate(Email, Password)) {
+            if (await Authenticator.attempt(Email, Password, req.body.remember, res)) {
+                return res.redirect('/');
             }
+            
+            return res.render("session/create", {
+                title: 'Login',
+                errors: { input: "Your credential is invalid." },
+                login: null,
+                url: req.path
+            });
         }
-        delete user.Password;
-
-        const token = JWTAction.createJWT(user);
-        Cookie.createCookie(res, 'user', token, true, req.body.remember);
         
-        return res.redirect('/');
+        return res.render("session/create", {
+            title: 'Login',
+            errors: form.getErrors(),
+            login: null,
+            url: req.path
+        });
     },
 
     destroy: (req, res) => {
         if (!req.signedCookies.user) {
             return res.redirect('/');
         }
-        
-        Cookie.deleteCookie(res, 'user');
+
+        Authenticator.logout(res);
         
         return res.redirect('/');
     }

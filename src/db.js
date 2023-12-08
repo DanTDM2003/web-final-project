@@ -35,7 +35,7 @@ module.exports = {
         let con = null;
         try {
             con = await db.connection.connect();
-            let sql = db.pgp.helpers.insert(obj, null, tbName)
+            let sql = db.pgp.helpers.insert(obj, null, tbName);
             await con.query(sql);
         } catch (error) {
             throw error;

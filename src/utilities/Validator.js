@@ -1,9 +1,13 @@
 module.exports = {
-    stringValidate: async (input='', min=7, max=Infinity) => {
-        if (input.length < min || input.length > max) {
-            return false;
-        }
+    stringValidate: (input='', min=7, max=Infinity) => {
+        input = input.trim();
 
-        return true;
+        return input.length >= min && input.length <= max;
+    },
+
+    emailValidate: (email='') => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        return emailRegex.test(email);
     }
 }
