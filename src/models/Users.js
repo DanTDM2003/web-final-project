@@ -12,20 +12,26 @@ module.exports = class User {
         this.Email = user.Email;
     }
 
-    static async findAll() {
-        try {
-            const users = await db.all(tbName);
-            return users;
-        } catch (error) {
-            throw error;
-        }
-    }
-    
-    static async findOne(user) {
+    static async findAll(attributes='*') {
         let con = null;
         try {
             con = await cn.connection.connect();
-            const users = await con.oneOrNone(`SELECT * FROM "${tbName}" WHERE ("Email" = $1)`, [user.Email]);
+            const user = await con.any(`SELECT $1:name FROM "${tbName}"`, [attributes]);
+            return user;
+        } catch (error) {
+            throw error;
+        } finally {
+            if (con) {
+                con.done();
+            }
+        }
+    }
+    
+    static async findOne(user, attributes='*') {
+        let con = null;
+        try {
+            con = await cn.connection.connect();
+            const users = await con.oneOrNone(`SELECT $1:name FROM "${tbName}" WHERE "Email" = $2`, [attributes, user.Email]);
             return users;
         } catch (error) {
             throw error;

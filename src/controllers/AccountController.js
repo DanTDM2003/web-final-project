@@ -2,9 +2,11 @@ const bcrypt = require('bcrypt');
 
 const Users = require('../models/Users.js');
 
+const JWTAction = require('../utilities/JWTAction.js');
+
 module.exports = {
     create: (req, res) => {
-        if (req.session.login === true) {
+        if (req.signedCookies.user) {
             return res.redirect('/');
         }
 
@@ -12,12 +14,12 @@ module.exports = {
             error: '',
             title: 'Registration',
             login: null,
-            url: req.url
+            url: req.path
         });
     },
 
     store: async (req, res) => {
-        if (req.session.login === true) {
+        if (req.signedCookies.user) {
             return res.redirect('/');
         }
 

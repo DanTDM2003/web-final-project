@@ -3,10 +3,13 @@ const bcrypt = require('bcrypt');
 
 const Users = require('../models/Users.js');
 const Validator = require('../utilities/Validator.js');
+const JWTAction = require('../utilities/JWTAction.js');
+const Cookie = require('../utilities/Cookies.js');
+
 
 module.exports = {
-    create: (req, res) => {
-        if (req.session.login === true) {
+    create: async (req, res) => {
+        if (req.signedCookies.user) {
             return res.redirect('/');
         }
         
@@ -14,12 +17,12 @@ module.exports = {
             title: 'Login',
             error: '',
             login: null,
-            url: req.url
+            url: req.path
         });
     },
 
     store: async (req, res) => {
-        if (req.session.login === true) {
+        if (req.signedCookies.user) {
             return res.redirect('/');
         }
 
@@ -33,7 +36,7 @@ module.exports = {
                 title: 'Login',
                 error: "Your email is not valid.",
                 login: null,
-                url: req.url
+                url: req.path
             });
         }
 
@@ -42,7 +45,7 @@ module.exports = {
                 title: 'Login',
                 error: "Your email is not valid.",
                 login: null,
-                url: req.url
+                url: req.path
             });
         }
         
@@ -53,7 +56,7 @@ module.exports = {
                 title: 'Login',
                 error: "Your credential is not valid.",
                 login: null,
-                url: req.url
+                url: req.path
             });
         } else {
             if (!bcrypt.compareSync(req.body.Password, user.Password)) {
@@ -61,24 +64,24 @@ module.exports = {
                     title: 'Login',
                     error: "Your credential is not valid.",
                     login: null,
-                    url: req.url
+                    url: req.path
                 });
             }
         }
+        delete user.Password;
 
-        req.session.login = user.Username;
-        req.session.save();
+        const token = JWTAction.createJWT(user);
+        Cookie.createCookie(res, 'user', token, true, req.body.remember);
         
         return res.redirect('/');
     },
 
     destroy: (req, res) => {
-        if (!req.session.login) {
+        if (!req.signedCookies.user) {
             return res.redirect('/');
         }
-
-        req.session.login = null;
-        req.session.save();
+        
+        Cookie.deleteCookie(res, 'user');
         
         return res.redirect('/');
     }

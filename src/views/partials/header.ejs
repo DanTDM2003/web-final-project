@@ -17,14 +17,13 @@
             <div class="col-md-3">
                 <div class="user">
                     <div class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= login ? login.Username : 'Guest' %></a>
                         <% if (!login) { %>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account</a>
                             <div class="dropdown-menu rounded-2">
                                 <a href="/login" class="dropdown-item <%= url === '/login' ? 'active' : '' %>">Login</a>
                                 <a href="/register" class="dropdown-item <%= url === '/register' ? 'active' : '' %>">Register</a>
                             </div>
                         <% } else { %>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">My Account</a>
                             <div class="dropdown-menu rounded-2">
                                 <a href="/logout" class="dropdown-item">Logout</a>
                             </div>

@@ -1,42 +1,37 @@
 const express = require('express');
 const router = express.Router();
 
-const SessionController = require('../controllers/SessionController.js');
-const AccountController = require('../controllers/AccountController.js');
+const Cookie = require('../utilities/Cookies.js');
+const JWTAction = require('../utilities/JWTAction.js');
 
 router.get('/', (req, res) => {
+    const user = Cookie.decodeCookie(req.signedCookies.user);
+
     res.render('index', {
         title: 'Home',
-        login: req.session.login,
-        url: req.url
+        login: user ? JWTAction.decodeJWT(user) : null,
+        url: req.path
     });
 });
 
 router.get('/products', (req, res) => {
+    const user = Cookie.decodeCookie(req.signedCookies.user);
+
     res.render('product/index', {
         title: 'Products',
-        login: req.session.login,
-        url: req.url
+        login: user ? JWTAction.decodeJWT(user) : null,
+        url: req.path
     });
 });
 
 router.get('/contact', (req, res) => {
+    const user = Cookie.decodeCookie(req.signedCookies.user);
+    
     res.render('contact', {
         title: 'Home',
-        login: req.session.login,
-        url: req.url
+        login: user ? JWTAction.decodeJWT(user) : null,
+        url: req.path
     });
 });
-
-router.route('/login')
-        .get(SessionController.create)
-        .post(SessionController.store);
-
-router.get('/logout', SessionController.destroy);
-
-
-router.route('/register')
-        .get(AccountController.create)
-        .post(AccountController.store);
 
 module.exports = router;
