@@ -1,10 +1,10 @@
 const bcrypt = require('bcrypt');
 
-const Users = require('../models/Users.js');
+const Users = require('../../models/Users.js');
 
-const Validator = require('../utilities/Validator.js');
-const JWTAction = require('../utilities/JWTAction.js');
-const Cookie = require('../utilities/Cookies.js');
+const Validator = require('../../utilities/Validator.js');
+const JWTAction = require('../../utilities/JWTAction.js');
+const Cookie = require('../../utilities/Cookies.js');
 
 module.exports = {
     create: (req, res) => {

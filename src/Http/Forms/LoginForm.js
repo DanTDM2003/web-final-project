@@ -1,4 +1,4 @@
-const Validator = require('../Validator.js');
+const Validator = require('../../utilities/Validator.js');
 
 module.exports = class LoginForm {
     constructor() {

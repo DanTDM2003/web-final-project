@@ -1,14 +1,10 @@
 const he = require('he');
 
-const LoginForm = require('../utilities/Forms/LoginForm.js');
-const Authenticator = require('../utilities/Authenticator.js');
+const LoginForm = require('../Forms/LoginForm.js');
+const Authenticator = require('../../utilities/Authenticator.js');
 
 module.exports = {
     create: async (req, res) => {
-        if (req.signedCookies.user) {
-            return res.redirect('/');
-        }
-        
         res.render('session/create.ejs', {
             title: 'Login',
             errors: null,
@@ -18,10 +14,6 @@ module.exports = {
     },
 
     store: async (req, res) => {
-        if (req.signedCookies.user) {
-            return res.redirect('/');
-        }
-
         const form = new LoginForm();
 
         let { Email, Password } = req.body;
@@ -51,10 +43,6 @@ module.exports = {
     },
 
     destroy: (req, res) => {
-        if (!req.signedCookies.user) {
-            return res.redirect('/');
-        }
-
         Authenticator.logout(res);
         
         return res.redirect('/');
