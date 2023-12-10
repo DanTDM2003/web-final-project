@@ -45,8 +45,8 @@
                             <input class="form-control" name="Email" id="Email" type="email" placeholder="E-mail..." required>
                         </div>
                         <span class="w-50" style="font-size: 13px;">Already have an account? <a href="/login">Sign in</a></span>
-                        <% if (error) { %>
-                            <span class="w-50 text-danger" style="font-size: 13px;"><%= error %></span>
+                        <% for (let error in errors) { %>
+                            <span class="w-50 text-danger" style="font-size: 13px;"><%= errors[error] %></span>
                         <% } %>
                     </div>
                     <div class="w-50 mt-4">

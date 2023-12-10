@@ -2,20 +2,20 @@ const bcrypt = require('bcrypt');
 
 const Users = require('../models/Users.js');
 const JWTAction = require('../utilities/JWTAction.js');
-const Cookie = require('../utilities/Cookies.js');
+const Cookies = require('../utilities/Cookies.js');
 
 module.exports = {
     login: function (res, user, remember) {
         const token = JWTAction.createJWT(user);
-        Cookie.createCookie(res, 'user', token, true, remember);
+        Cookies.createCookie(res, 'user', token, true, remember);
     },
 
     logout: function (res) {
-        Cookie.deleteCookie(res, 'user');
+        Cookies.deleteCookie(res, 'user');
     },
 
     attempt: async function (email, password, remember, res) {
-        const user = await Users.findOne({ Email: email, Password: password});
+        const user = await Users.findOne({ Email: email, Password: password });
 
         if (user) {
             if (bcrypt.compareSync(password, user.Password)) {

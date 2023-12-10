@@ -9,5 +9,12 @@ module.exports = {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         return emailRegex.test(email);
-    }
+    },
+
+    phoneNumberValidate(phoneNumber) {
+        const pattern = /^\d{10}$/; // Matches a 10-digit number
+      
+        return pattern.test(phoneNumber);
+      }
+      
 }

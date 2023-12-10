@@ -17,6 +17,7 @@
     "express-session": "^1.17.3",
     "he": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
-    "pg-promise": "^11.5.4"
+    "pg-promise": "^11.5.4",
+    "sanitize-html": "^2.11.0"
   }
 }
