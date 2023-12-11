@@ -1,10 +1,10 @@
-const db = require('./config/database.js');
+const cn = require('./config/database.js');
 
 module.exports = {
     all: async (tbName) => {
         let con = null;
         try {
-            con = await db.connection.connect();
+            con = await cn.connection.connect();
             const rs = await con.any(`SELECT * FROM "${tbName}"`);
             return rs;
         } catch (error) {
@@ -19,7 +19,7 @@ module.exports = {
     get: async (tbName, obj) => {
         let con = null;
         try {
-            con = await db.connection.connect();
+            con = await cn.connection.connect();
             const rs = await con.any(`SELECT * FROM "${tbName}" WHERE ("Email" LIKE $1) AND ("Password" LIKE $2)`);
             return rs;
         } catch (error) {
@@ -34,8 +34,8 @@ module.exports = {
     add: async (tbName, obj) => {
         let con = null;
         try {
-            con = await db.connection.connect();
-            let sql = db.pgp.helpers.insert(obj, null, tbName);
+            con = await cn.connection.connect();
+            let sql = cn.pgp.helpers.insert(obj, null, tbName);
             await con.query(sql);
         } catch (error) {
             throw error;
@@ -49,8 +49,8 @@ module.exports = {
     update: async (tbName, obj) => {
         let con = null;
         try {
-            con = await db.connection.connect();
-            db.pgp.helpers.update(obj, null, tbName);
+            con = await cn.connection.connect();
+            cn.pgp.helpers.update(obj, null, tbName);
         } catch (error) {
             throw error;
         } finally {

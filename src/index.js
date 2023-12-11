@@ -29,6 +29,8 @@ app.use((req, res, next) => {
 
 viewEngine(app);
 
+helpers.migrate();
+
 app.use(require('./routes/web.js'));
 app.use(require('./routes/api.js'));
 
