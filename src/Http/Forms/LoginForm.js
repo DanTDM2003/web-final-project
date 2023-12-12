@@ -18,7 +18,7 @@ module.exports = class LoginForm {
             this.setError("email", "Please enter a valid email address.");
         }
 
-        if (!Validator.stringValidate(password)) {
+        if (!Validator.stringValidate(password, 7)) {
             this.setError("password", "Please enter at least 7 characters for a password.");
         }
         

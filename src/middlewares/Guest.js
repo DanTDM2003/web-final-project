@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-    if (req.signedCookies.user) {
+    if (req.isAuthenticated()) {
         return res.redirect('/');
     }
     next();

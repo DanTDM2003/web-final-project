@@ -9,7 +9,7 @@ router.get('/', (req, res) => {
 
     res.render('index', {
         title: 'Home',
-        login: user ? JWTAction.decodeJWT(user) : null,
+        login: req.user,
         url: req.path
     });
 });
@@ -19,7 +19,7 @@ router.get('/products', (req, res) => {
 
     res.render('product/index', {
         title: 'Products',
-        login: user ? JWTAction.decodeJWT(user) : null,
+        login: req.user,
         url: req.path
     });
 });
@@ -29,7 +29,7 @@ router.get('/contact', (req, res) => {
     
     res.render('contact', {
         title: 'Home',
-        login: user ? JWTAction.decodeJWT(user) : null,
+        login: req.user,
         url: req.path
     });
 });

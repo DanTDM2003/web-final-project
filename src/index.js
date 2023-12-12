@@ -3,10 +3,13 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const sanitizeHtml = require('sanitize-html');
+const flash = require('express-flash');
 
 const app = express();
 const viewEngine = require('./config/viewEngine.js');
 const helpers = require('./utilities/helpers.js');
+const Cookies = require('./utilities/Cookies.js');
+const JWTAction = require('./utilities/JWTAction.js');
 
 const port = process.env.PORT;
 const host = process.env.HOST;
@@ -30,6 +33,20 @@ app.use((req, res, next) => {
 viewEngine(app);
 
 helpers.migrate();
+
+require('./modules/passport.js')(app);
+
+app.use((req, res, next) => {
+    if (req.signedCookies.user) {
+        const token = Cookies.decodeCookie(req.signedCookies.user);
+        const user = JWTAction.decodeJWT(token);
+        req.login(user, (err) => {
+            return next();
+        });
+    } else {
+        return next();
+    }
+})
 
 app.use(require('./routes/web.js'));
 app.use(require('./routes/api.js'));

@@ -2,9 +2,7 @@ const bcrypt = require('bcrypt');
 const he = require('he');
 
 const Users = require('../../models/Users.js');
-
 const RegisterForm = require('../Forms/RegisterForm.js');
-const Authenticator = require('../../utilities/Authenticator.js');
 
 module.exports = {
     create: (req, res) => {
@@ -29,25 +27,21 @@ module.exports = {
         if (form.validate(Fullname, Username, Password, Email)) {
             const user = await Users.findOne({ Email: Email, Password: Password });
             if (!user) {
-                Password = bcrypt.hashSync(Password, 10);
+                await Users.add({ Fullname, Username, Password: bcrypt.hashSync(Password, 10), Email });
 
-                let newAccount = req.body;
-                Users.add(newAccount);
-
-                delete newAccount.Password;
-
-                await Authenticator.attempt(Email, Password, req.body.remember, res);
-                return res.redirect('/');
+                req.login({ Fullname, Username, Email }, (err) => {
+                    res.redirect('/');
+                })
+            } else {
+                form.setError('credential', "The email is already used.");
             }
-
-            form.setError('credential', "The email is already used.");
+        } else {
+            return res.render('registration/create', {
+                errors: form.getErrors(),
+                title: 'Registration',
+                login: null,
+                url: req.path
+            });
         }
-
-        return res.render('registration/create', {
-            errors: form.getErrors(),
-            title: 'Registration',
-            login: null,
-            url: req.path
-        });
     }
 }
