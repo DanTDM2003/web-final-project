@@ -12,7 +12,7 @@ module.exports = class User {
         this.Email = user.Email;
     }
 
-    static async findAll(attributes='*') {
+    static async findAll(attributes = '*') {
         let con = null;
         try {
             con = await cn.connection.connect();
@@ -26,8 +26,8 @@ module.exports = class User {
             }
         }
     }
-    
-    static async findOne(user, attributes='*') {
+
+    static async findOne(user, attributes = '*') {
         let con = null;
         try {
             con = await cn.connection.connect();
@@ -47,6 +47,52 @@ module.exports = class User {
             const rt = await db.add(tbName, user);
             return rt;
         } catch (error) {
+            throw error;
+        }
+    }
+    static async getAllUsers() {
+        let con = null;
+        try {
+            con = await cn.connection.connect();
+            const listUsers = await con.any(`SELECT * FROM "${tbName}" ORDER BY "id" ASC`);
+            return listUsers;
+        } catch (error) {
+            throw error;
+        }
+    }
+    static async updateListUsers(users) {
+        let con = null;
+        try {
+            con = await cn.connection.connect();
+            users.forEach(async (user) => {
+                const query = `
+                UPDATE "Users"
+                SET
+                    "Fullname" = $1,
+                    "Username" = $2,
+                    "Email" = $3
+                WHERE
+                    "id" = $4`;
+                await con.none(query, [
+                    user.Fullname,
+                    user.Username,
+                    user.Email,
+                    user.id
+                ]);
+            });
+        }
+        catch (error) {
+            throw error;
+        }
+    }
+    static async deleteUser(userId) {
+        let con = null;
+        try {
+            con = await cn.connection.connect();
+            console.log("ID: ", userId);
+            await con.none(`DELETE FROM "${tbName}" WHERE id = $1`, userId);
+        }
+        catch (error) {
             throw error;
         }
     }

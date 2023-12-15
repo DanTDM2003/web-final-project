@@ -50,6 +50,7 @@ app.use((req, res, next) => {
 
 app.use(require('./routes/web.js'));
 app.use(require('./routes/api.js'));
+app.use('/admin', require('./routes/admin.js'))
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');

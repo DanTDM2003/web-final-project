@@ -28,7 +28,6 @@ module.exports = {
                                 console.error(err);
                                 return res.redirect('/login');
                         }
-                        delete user.Password;
                         const token = JWTAction.createJWT(user);
                         Cookies.createCookie(res, 'user', token, true, req.body.remember);
                         return res.redirect('/');
