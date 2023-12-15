@@ -15,5 +15,6 @@ module.exports = {
         const pattern = /^\d{10}$/; // Matches a 10-digit number
       
         return pattern.test(phoneNumber);
-    }
+      }
+      
 }
