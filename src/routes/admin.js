@@ -1,5 +1,11 @@
 const express = require('express');
 const router = express.Router();
+
+const SessionController = require('../Http/controllers/SessionController.js');
+const AccountController = require('../Http/controllers/AccountController.js');
+const AuthMiddleware = require('../middlewares/Auth.js');
+const GuestMiddleware = require('../middlewares/Guest.js');
+
 const UserR = require('./../models/Users.js')
 
 const Cookie = require('../utilities/Cookies.js');
