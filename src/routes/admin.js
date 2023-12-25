@@ -7,6 +7,7 @@ const JWTAction = require('../utilities/JWTAction.js');
 
 router.get('/', (req, res) => {
     const user = Cookie.decodeCookie(req.signedCookies.user);
+    console.log(req.user);
     res.render('admin/index', {
         title: 'Dashboard',
         login: req.user,
@@ -32,6 +33,18 @@ router.get('/manage-users', async (req, res) => {
         listUsers: listUsers
     });
 });
+router.get('/add-product', async (req, res) => {
+    const user = Cookie.decodeCookie(req.signedCookies.user);
+    const listUsers = await UserR.getAllUsers();
+    console.log("listUsers: ", listUsers);
+    res.render('admin/add-product.ejs', {
+        title: 'Manage users',
+        login: req.user,
+        url: req.path,
+        listUsers: listUsers
+    });
+});
+
 router.post('/update', async (req, res) => {
     const user = Cookie.decodeCookie(req.signedCookies.user);
     const changedListUsers = JSON.parse(req.body.changedUsers);
@@ -51,6 +64,7 @@ router.get('/delete/:id', async (req, res) => {
     console.log("ID: ", userId);
     await UserR.deleteUser(userId);
     const listUsers = await UserR.getAllUsers();
+    console.log("listusers");
     res.render('admin/manage-users.ejs', {
         title: 'Manage users',
         login: req.user,
