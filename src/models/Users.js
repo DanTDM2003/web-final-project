@@ -60,6 +60,7 @@ module.exports = class User {
             throw error;
         }
     }
+
     static async updateListUsers(users) {
         let con = null;
         try {

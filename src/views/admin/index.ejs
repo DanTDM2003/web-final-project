@@ -65,11 +65,11 @@
           >
           <a
             class="nav-link"
-            id="address-nav"
+            id="manage-products-nav"
             data-toggle="pill"
-            href="#address-tab"
+            href="#manage-products-tab"
             role="tab"
-            >address</a
+            >Manage products</a
           >
 
           <a
@@ -174,7 +174,7 @@
             role="tabpanel"
             aria-labelledby="add-product-nav"
           >
-            <form
+            <!-- <form
               action="/admin/upload-profile-pic"
               method="POST"
               enctype="multipart/form-data"
@@ -187,7 +187,112 @@
                 style="display: none; max-width: 300px; max-height: 300px"
               />
               <button type="submit">Upload</button>
+            </form> -->
+            <form action="/admin/upload-product" method="POST">
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="product-name">Product name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="product-name"
+                    placeholder="Enter product's name"
+                    name="productName"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="short-description">Short description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="short-description"
+                  placeholder="My product"
+                  name="shortDescription"
+                />
+              </div>
+              <div class="form-group">
+                <label for="full-description">Full description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="full-description"
+                  placeholder="My product"
+                  name="fullDescription"
+                />
+              </div>
+              <div
+                class="form-row"
+                style="display: flex; justify-content: space-between"
+              >
+                <div class="form-group col-md-4">
+                  <label for="product-quantity">Quantity</label>
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="product-quantity"
+                    name="quantity"
+                  />
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="product-type">Category</label>
+                  <select
+                    id="product-type"
+                    class="form-control"
+                    name="category"
+                  >
+                    <option selected>Choose...</option>
+                    <option>...</option>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="product-price">Price</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="product-price"
+                    placeholder="Enter price"
+                    min="0"
+                    name="price"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="imgInp">Product's image</label>
+                  <input
+                    type="file"
+                    id="imgInp"
+                    name="profile_pic"
+                    style="padding: 5px 5px; height: fit-content"
+                  />
+                </div>
+              </div>
+              <div
+                class="form-group col-md-12"
+                style="text-align: center; margin-bottom: 10px"
+              >
+                <center>
+                  <img
+                    id="imgReview"
+                    src="#"
+                    alt="your image"
+                    style="
+                      display: none;
+                      width: 100%;
+                      max-height: 500px;
+                      border: 2px blue;
+                      border-style: dashed;
+                      padding: 10px;
+                    "
+                  />
+                </center>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Add</button>
             </form>
+
             <script>
               const imgInp = document.getElementById("imgInp");
               const imgReview = document.getElementById("imgReview");
@@ -268,25 +373,11 @@
           </div>
           <div
             class="tab-pane fade"
-            id="address-tab"
+            id="manage-products-tab"
             role="tabpanel"
-            aria-labelledby="address-nav"
+            aria-labelledby="manage-products-nav"
           >
-            <h4>Address</h4>
-            <div class="row">
-              <div class="col-md-6">
-                <h5>Payment Address</h5>
-                <p>123 Payment Street, Los Angeles, CA</p>
-                <p>Mobile: 012-345-6789</p>
-                <button>Edit Address</button>
-              </div>
-              <div class="col-md-6">
-                <h5>Shipping Address</h5>
-                <p>123 Shipping Street, Los Angeles, CA</p>
-                <p>Mobile: 012-345-6789</p>
-                <button>Edit Address</button>
-              </div>
-            </div>
+            hello
           </div>
           <div
             class="tab-pane fade"

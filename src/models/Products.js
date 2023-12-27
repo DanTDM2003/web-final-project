@@ -1,6 +1,6 @@
 const db = require('../config/database');
 
-module.exports = class Product{
+module.exports = class Product {
   constructor(product) {
     this.id = product.id;
     this.name = product.name;
@@ -11,7 +11,7 @@ module.exports = class Product{
     this.full_description = product.full_description;
   }
 
-  static async fetchAll(conditions=['', '']) {
+  static async fetchAll(conditions = ['', '']) {
     let con = null;
     try {
       con = await db.connection.connect();
@@ -22,44 +22,54 @@ module.exports = class Product{
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
+    }
+  }
+  static async getMaxID() {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      const maxID = await con.one('SELECT MAX(id) FROM "Product"');
+      return maxID;
+    } catch (error) {
+      throw error;
     }
   }
 
   static async getProduct(id) {
     let con = null;
-    try{
+    try {
       con = await db.connection.connect();
       const product = await con.query('SELECT * FROM "Product" WHERE id = $1', [id]);
       return product;
     }
-    catch (error){
+    catch (error) {
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
     }
   }
 
-  static async getProducts(page, itemPerPage){
+  static async getProducts(page, itemPerPage) {
     let con = null;
-    try{
+    try {
       con = await db.connection.connect();
       const products = await con.query('SELECT * FROM "Product" LIMIT $1 OFFSET ($2 - 1) * $3', [itemPerPage, page, itemPerPage]);
       return products;
     }
-    catch (error){
+    catch (error) {
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
     }
   }
 
-  static async getAllCategories(){
+  static async getAllCategories() {
     let con = null;
     try {
       con = await db.connection.connect();
@@ -70,12 +80,12 @@ module.exports = class Product{
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
     }
   }
 
-  static async getSameCategory(catName){
+  static async getSameCategory(catName) {
     let con = null;
     try {
       con = await db.connection.connect();
@@ -86,12 +96,12 @@ module.exports = class Product{
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
     }
   }
 
-  static async getRelatedProducts(id){
+  static async getRelatedProducts(id) {
     let con = null;
     try {
       con = await db.connection.connect();
@@ -102,7 +112,7 @@ module.exports = class Product{
       throw error;
     }
     finally {
-      if(con)
+      if (con)
         con.done();
     }
   }

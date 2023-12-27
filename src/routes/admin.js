@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const UserR = require('./../models/Users.js')
+const ProductM = require('./../models/Products.js')
 
 const Cookie = require('../utilities/Cookies.js');
 const JWTAction = require('../utilities/JWTAction.js');
@@ -10,6 +11,7 @@ const path = require('path');
 router.get('/', async (req, res) => {
     const user = Cookie.decodeCookie(req.signedCookies.user);
     const listUsers = await UserR.getAllUsers();
+
     res.render('admin/index', {
         title: 'Dashboard',
         login: req.user,
@@ -83,11 +85,11 @@ const storage = multer.diskStorage({
     },
 
     // By default, multer removes file extensions so let's add them back
-    filename: function (req, file, cb) {
-
-        const userId = req.body.user_id || 'default';
-        console.log(file.fieldname)
-        cb(null, userId + file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+    filename: async function (req, file, cb) {
+        const result = await ProductM.getMaxID();
+        const fileId = result.max;
+        // const userId = req.body.user_id || 'default';
+        cb(null, fileId + '-' + Date.now() + path.extname(file.originalname));
     }
 });
 
@@ -100,7 +102,7 @@ const imageFilter = function (req, file, cb) {
 };
 
 let upload = multer({ storage: storage, fileFilter: imageFilter });
-router.post('/upload-profile-pic', upload.single('profile_pic'), (req, res) => {
+router.post('/upload-product', upload.single('profile_pic'), (req, res) => {
     if (req.fileValidationError) {
         return res.send(req.fileValidationError);
     }
