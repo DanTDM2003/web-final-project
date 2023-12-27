@@ -34,14 +34,16 @@
           <a
             class="nav-link"
             id="manage-users-nav"
-            href="/admin/manage-users"
+            data-toggle="pill"
+            href="#manage-users-tab"
             role="tab"
             >Manage users</a
           >
           <a
             class="nav-link"
             id="add-product-nav"
-            href="/admin/add-product"
+            data-toggle="pill"
+            href="#add-product-tab"
             role="tab"
             >Add product</a
           >
@@ -98,6 +100,108 @@
               Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
               eros. Aliquam et sapien eget arcu rhoncus scelerisque.
             </p>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="manage-users-tab"
+            role="tabpanel"
+            aria-labelledby="manage-users-nav"
+          >
+            <form
+              id="userForm"
+              action="/admin/update"
+              method="post"
+              onsubmit="submitForm()"
+            >
+              <table class="table table-striped-columns">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fullname</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% listUsers.forEach(function(user) { %>
+                  <tr style="text-decoration: none" hasChange="false">
+                    <th scope="row"><%= user.id %></th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Fullname"
+                        value="<%= user.Fullname %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Username"
+                        value="<%= user.Username %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Email"
+                        value="<%= user.Email %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <a
+                        href="/admin/delete/<%= user.id %>"
+                        class="fa fa-trash"
+                      ></a>
+                    </th>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <button type="submit">Edit</button>
+            </form>
+            <script src="/js/admin/manage-users.js"></script>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="add-product-tab"
+            role="tabpanel"
+            aria-labelledby="add-product-nav"
+          >
+            <form
+              action="/admin/upload-profile-pic"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <input type="file" id="imgInp" name="profile_pic" />
+              <img
+                id="imgReview"
+                src="#"
+                alt="your image"
+                style="display: none; max-width: 300px; max-height: 300px"
+              />
+              <button type="submit">Upload</button>
+            </form>
+            <script>
+              const imgInp = document.getElementById("imgInp");
+              const imgReview = document.getElementById("imgReview");
+
+              imgInp.onchange = (evt) => {
+                const [file] = imgInp.files;
+                if (file) {
+                  imgReview.src = URL.createObjectURL(file);
+                  imgReview.style.display = "block"; // Thêm dòng này
+                } else {
+                  imgReview.style.display = "none"; // Ẩn ảnh nếu không có file
+                }
+              };
+            </script>
           </div>
           <div
             class="tab-pane fade"
