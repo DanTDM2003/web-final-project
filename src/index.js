@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const sanitizeHtml = require('sanitize-html');
-const flash = require('express-flash');
 
 const app = express();
 const viewEngine = require('./config/viewEngine.js');
@@ -63,8 +62,6 @@ app.use((err, req, res, next) => {
     helpers.abort(req, res, err.status);
 });
 
-// app.listen(port, host, () => {
-//     console.log("Server has started.");
-// });
-
-app.listen(port, () => console.log(`Server listening on http://127.0.0.1:${port}/`))
+app.listen(port, host, () => {
+    console.log(`Server has started on http://127.0.0.1:${port}.`);
+});

@@ -12,8 +12,14 @@ module.exports = async () => {
                     "Fullname" VARCHAR,
                     "Username" VARCHAR,
                     "Password" VARCHAR,
-                    "Email" VARCHAR
-                );`;
+                    "Email" VARCHAR,
+                    "Role" TEXT
+                );
+                
+                INSERT INTO "Users"("Fullname","Username","Password","Email","Role")
+                VALUES  ('Hưng','DanTDM2003','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung@gmail.com','Admin'),
+                        ('Hưng','Hưng đẹp trai','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung1@gmail.com','Restaurant')
+                `;
 
                 return cn.connection.query(createTableQuery)
                     .then(() => {
