@@ -116,4 +116,20 @@ module.exports = class Product {
         con.done();
     }
   }
+  static async add(tbName, obj) {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      let sql = db.pgp.helpers.insert(obj, null, tbName)
+      await con.none(sql);
+      return;
+    }
+    catch (error) {
+      throw error;
+    }
+    finally {
+      if (con)
+        con.done();
+    }
+  }
 }

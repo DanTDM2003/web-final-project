@@ -105,7 +105,7 @@
             class="tab-pane fade"
             id="manage-users-tab"
             role="tabpanel"
-            aria-labelledby="manage-users-nav"
+            aria-labelledby="  -users-nav"
           >
             <form
               id="userForm"
@@ -188,7 +188,11 @@
               />
               <button type="submit">Upload</button>
             </form> -->
-            <form action="/admin/upload-product" method="POST">
+            <form
+              action="/admin/upload-product"
+              method="POST"
+              enctype="multipart/form-data"
+            >
               <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="product-name">Product name</label>
