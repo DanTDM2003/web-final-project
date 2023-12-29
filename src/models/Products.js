@@ -15,7 +15,7 @@ module.exports = class Product {
     let con = null;
     try {
       con = await db.connection.connect();
-      const products = await con.any(`SELECT * FROM ("Product" JOIN "Category" ON "Product"."catID" = "Category"."catID") WHERE ("Product".name ILIKE '%' || $1 || '%') AND ("Category"."catName" ILIKE '%' || $2 || '%')`, conditions);
+      const products = await con.any(`SELECT "Products".id AS product_id, "Products"."Name" AS product_name, *  FROM ("Products" JOIN "Categories" ON "Products"."Category_id" = "Categories".id) WHERE ("Products"."Name" ILIKE '%' || $1 || '%') AND ("Categories"."Name" ILIKE '%' || $2 || '%')`, conditions);
       return products;
     }
     catch (error) {
@@ -37,11 +37,11 @@ module.exports = class Product {
     }
   }
 
-  static async getProduct(id) {
+  static async fetch(id) {
     let con = null;
     try {
       con = await db.connection.connect();
-      const product = await con.query('SELECT * FROM "Product" WHERE id = $1', [id]);
+      const product = await con.query('SELECT * FROM "Products" WHERE id = $1', [id]);
       return product;
     }
     catch (error) {
@@ -57,7 +57,7 @@ module.exports = class Product {
     let con = null;
     try {
       con = await db.connection.connect();
-      const products = await con.query('SELECT * FROM "Product" LIMIT $1 OFFSET ($2 - 1) * $3', [itemPerPage, page, itemPerPage]);
+      const products = await con.query('SELECT * FROM "Products" LIMIT $1 OFFSET ($2 - 1) * $3', [itemPerPage, page, itemPerPage]);
       return products;
     }
     catch (error) {
@@ -69,43 +69,12 @@ module.exports = class Product {
     }
   }
 
-  static async getAllCategories() {
+  static async fetchRelatedProducts(id) {
     let con = null;
     try {
       con = await db.connection.connect();
-      const categories = await con.any('SELECT * FROM "Category"');
-      return categories;
-    }
-    catch (error) {
-      throw error;
-    }
-    finally {
-      if (con)
-        con.done();
-    }
-  }
+      const products = await con.any('SELECT p.* FROM "Products" AS p1, "Products" AS p2 WHERE p2.id = $1 AND p1.id != p2.id AND p1."Category_id" = p2."Category_id" LIMIT 5 ', [id]);
 
-  static async getSameCategory(catName) {
-    let con = null;
-    try {
-      con = await db.connection.connect();
-      const products = await con.any('SELECT p.* FROM "Product" p, "Category" c WHERE p."catID" = c."catID" AND c."catName" = $1', [catName]);
-      return products;
-    }
-    catch (error) {
-      throw error;
-    }
-    finally {
-      if (con)
-        con.done();
-    }
-  }
-
-  static async getRelatedProducts(id) {
-    let con = null;
-    try {
-      con = await db.connection.connect();
-      const products = await con.any('SELECT p.* FROM "Product" p, "Product" pid WHERE pid.id = $1 AND p.id != pid.id AND p."catID" = pid."catID" LIMIT 5 ', [id]);
       return products;
     }
     catch (error) {

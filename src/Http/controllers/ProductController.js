@@ -1,17 +1,21 @@
-const productM = require('../../models/Products.js')
-const Cookie = require('../../utilities/Cookies.js');
-const JWTAction = require('../../utilities/JWTAction.js');
+const Products = require('../../models/Products.js');
+const Categories = require('../../models/Categories.js');
 
 module.exports = {
   index: async (req, res, next) => {
     let conditions = ['', ''];
-    if(req.query.search)
-      conditions[0] = req.query.search
-    if(req.query.category)
-      conditions[1] = req.query.category
+    if (req.query.search) {
+      conditions[0] = req.query.search;
+    }
+
+    if (req.query.category) {
+      conditions[1] = req.query.category;
+    }
+
     try{
-      const products = await productM.fetchAll(conditions);
-      const categories = await productM.getAllCategories();
+      const products = await Products.fetchAll(conditions);
+      const categories = await Categories.fetchAll();
+      
       res.render('product/index', {
         title: 'Products',
         login: req.user,
@@ -19,20 +23,24 @@ module.exports = {
         products: products,
         categories: categories,
         query: req.query,
-        page: Number(req.params.page),
-        total: 3
-    })
-    }
-    catch (error){
+        page: +req.params.page,
+        total: Math.ceil(products.length / 9)
+      })
+    } catch (error){
       next(error)
     }
+
+
+    // Perform pagination logic here to retrieve data based on requested page number
+    // Example: Get data for page number "req.query.page"
+    
   },
-  getSingle: async (req, res, next) => {
+  
+  show: async (req, res, next) => {
     try{
-      const user = Cookie.decodeCookie(req.signedCookies.user);
-      const product = await productM.getProduct(req.params.id);
-      const products = await productM.getRelatedProducts(req.params.id);
-      const categories = await productM.getAllCategories();
+      const product = await Products.fetch(req.params.id);
+      const products = await Products.fetchRelatedProducts(req.params.id);
+      const categories = await Categories.fetchAll();
       res.render('product/show', {
         title: 'Home',
         login: req.user,
@@ -40,48 +48,27 @@ module.exports = {
         product: product,
         categories: categories,
         products: products
-    })
-    }
-    catch (error){
+      })
+    } catch (error){
       next(error)
     }
   },
+
   getItemPerPage: async (req, res, next) => {
     try{
-      const user = Cookie.decodeCookie(req.signedCookies.user);
-      const products = await productM.getProducts(req.params.page, 10);
-      const categories = await productM.getAllCategories()
+      const products = await Products.getProducts(req.params.page, 10);
+      const categories = await Products.getAllCategories()
       res.render('product/index', {
         title: 'Home',
         login: req.user,
         url: req.path.Cookie,
         products: products,
         categories: categories,
-        page: Number(req.params.page),
+        page: +req.params.page,
         total: 3
-    })
-    }
-    catch (error){
+      })
+    } catch (error){
       next(error)
     }
-  },
-  getSameCategory: async (req, res, next)  => {
-    try{
-      const user = Cookie.decodeCookie(req.signedCookies.user);
-      const products = await productM.getSameCategory(req.query.category)
-      const categories = await productM.getAllCategories()
-      res.render('product/index', {
-        title: 'Home',
-        login: req.user,
-        url: req.path.Cookie,
-        products: products,
-        categories: categories,
-        page: Number(req.params.page),
-        total: 3
-    })
-    }
-    catch (error){
-      next(error)
-    }
-  },
+  }
 }

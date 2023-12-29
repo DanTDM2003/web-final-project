@@ -6,12 +6,11 @@ module.exports = class Category {
     this.catName = category.catName;
   }
 
-  static async getAllCategories(){
+  static async fetchAll(){
     let con = null;
     try {
       con = await db.connection.connect();
-      const categories = await con.any('SELECT * FROM "Category"');
-      console.log(categories)
+      const categories = await con.any('SELECT * FROM "Categories"');
       return categories;
     }
     catch (error) {
