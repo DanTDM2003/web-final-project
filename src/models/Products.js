@@ -1,5 +1,5 @@
 const db = require('../config/database');
-
+const tbName = "Product"
 module.exports = class Product {
   constructor(product) {
     this.id = product.id;
@@ -130,6 +130,59 @@ module.exports = class Product {
     finally {
       if (con)
         con.done();
+    }
+  }
+  static async getAllProducts() {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      const listProducts = await con.any(`SELECT * FROM "${tbName}" ORDER BY "id" ASC`);
+      return listProducts;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async deleteProduct(proId) {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      await con.none(`DELETE FROM "${tbName}" WHERE id = $1`, proId);
+      return;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+  static async updateListProducts(products) {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      products.forEach(async (pro) => {
+        const query = `
+        UPDATE "Product"
+        SET
+            "name" = $1,
+            "price" = $2,
+            "short_description" = $3,
+            "quantity" = $4,
+            "full_description" = $5,
+            "catID" = $6
+        WHERE
+            "id" = $7`;
+        console.log(pro.id);
+        await con.none(query, [
+          pro.name,
+          pro.price,
+          pro.short_description,
+          pro.quantity,
+          pro.full_description,
+          pro.category,
+          pro.id
+        ]);
+      });
+    }
+    catch (error) {
+      throw error;
     }
   }
 }

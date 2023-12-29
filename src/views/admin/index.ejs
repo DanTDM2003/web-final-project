@@ -105,7 +105,7 @@
             class="tab-pane fade"
             id="manage-users-tab"
             role="tabpanel"
-            aria-labelledby="  -users-nav"
+            aria-labelledby="manage-users-nav"
           >
             <form
               id="userForm"
@@ -156,7 +156,7 @@
                     </th>
                     <th>
                       <a
-                        href="/admin/delete/<%= user.id %>"
+                        href="/admin/delete/users/<%= user.id %>"
                         class="fa fa-trash"
                       ></a>
                     </th>
@@ -381,7 +381,96 @@
             role="tabpanel"
             aria-labelledby="manage-products-nav"
           >
-            hello
+            <form
+              id="productForm"
+              action="/admin/edit-product"
+              method="post"
+              onsubmit="submitProductForm()"
+            >
+              <table class="table table-striped-columns">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Short description</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Full description</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody">
+                  <% listProducts.forEach(function(product) { %>
+                  <tr style="text-decoration: none" hasProductChange="false">
+                    <th scope="row"><%= product.id %></th>
+                    <th>
+                      <input
+                        type="text"
+                        class="productInput"
+                        data-property="product-name"
+                        value="<%= product.name %>"
+                        oninput="setProductChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="number"
+                        class="productInput"
+                        data-property="product-price"
+                        value="<%= product.price %>"
+                        oninput="setProductChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="productInput"
+                        data-property="short-description"
+                        value="<%= product.short_description %>"
+                        oninput="setProductChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="number"
+                        class="productInput"
+                        data-property="quantity"
+                        value="<%= product.quantity %>"
+                        oninput="setProductChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="productInput"
+                        data-property="full-description"
+                        value="<%= product.full_description %>"
+                        oninput="setProductChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <select class="productInput" data-property="category">
+                        <option selected>Choose...</option>
+                        <option>a</option>
+                        <option>b</option>
+                        <option>c</option>
+                        <option>d</option>
+                      </select>
+                    </th>
+                    <th>
+                      <a
+                        href="/admin/delete/products/<%= product.id %>"
+                        class="fa fa-trash"
+                      ></a>
+                    </th>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <button type="submit">Edit</button>
+            </form>
+            <script src="/js/admin/manage-product.js"></script>
           </div>
           <div
             class="tab-pane fade"
