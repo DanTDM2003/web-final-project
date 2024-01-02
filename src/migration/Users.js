@@ -18,7 +18,7 @@ module.exports = async () => {
                 
                 INSERT INTO "Users"("Fullname","Username","Password","Email","Role")
                 VALUES  ('Hưng','DanTDM2003','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung@gmail.com','Admin'),
-                        ('Hưng','Hưng đẹp trai','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung1@gmail.com','Restaurant')
+                        ('Hưng','Hưng đẹp trai','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung1@gmail.com','User')
                 `;
 
                 return cn.connection.query(createTableQuery)

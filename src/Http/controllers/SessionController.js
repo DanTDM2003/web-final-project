@@ -8,8 +8,9 @@ module.exports = {
         res.render('session/create.ejs', {
             title: 'Login',
             errors: null,
-            login: null,
-            url: req.path
+            login: req.isAuthenticated(),
+            url: req.path,
+            user: req.user
         });
     },
 
@@ -19,8 +20,9 @@ module.exports = {
                         return res.render("session/create", {
                                 title: 'Login',
                                 errors: info,
-                                login: req.user,
-                                url: req.path
+                                login: req.isAuthenticated(),
+                                url: req.path,
+                                user: req.user
                             });
                 }
                 req.login(user, (err) => {

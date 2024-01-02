@@ -13,20 +13,20 @@ const submitProductForm = () => {
 
     trList.forEach((tr) => {
         const id = tr.querySelector("th").innerText;
-        const name = tr.querySelector('input[data-property="product-name"]').value;
-        const price = tr.querySelector('input[data-property="product-price"]').value;
-        const shortDescription = tr.querySelector('input[data-property="short-description"]').value;
-        const quantity = tr.querySelector('input[data-property="quantity"]').value;
-        const fullDescription = tr.querySelector('input[data-property="full-description"]').value;
-        const category = 2;
+        const Name = tr.querySelector('input[data-property="product-name"]').value;
+        const Price = tr.querySelector('input[data-property="product-price"]').value;
+        const Short_Description = tr.querySelector('input[data-property="short-description"]').value;
+        const Quantity = tr.querySelector('input[data-property="quantity"]').value;
+        const Full_Description = tr.querySelector('input[data-property="full-description"]').value;
+        const Category_id = 2;
         const product = {
             id: id,
-            name: name,
-            price: price,
-            short_description: shortDescription,
-            quantity: quantity,
-            full_description: fullDescription,
-            category: category
+            Name: Name,
+            Price: Price,
+            Short_Description: Short_Description,
+            Quantity: Quantity,
+            Full_Description: Full_Description,
+            Category_id: Category_id
         };
 
         products.push(product);

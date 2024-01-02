@@ -1,7 +1,6 @@
 const db = require('../db.js');
 const cn = require('../config/database.js');
 
-
 const tbName = 'Users';
 
 module.exports = class User {
@@ -10,13 +9,14 @@ module.exports = class User {
         this.Username = user.Username;
         this.Password = user.Password;
         this.Email = user.Email;
+        this.Role = user.Role;
     }
 
     static async findAll(attributes = '*') {
         let con = null;
         try {
             con = await cn.connection.connect();
-            const user = await con.any(`SELECT $1:name FROM "${tbName}"`, [attributes]);
+            const user = await con.any(`SELECT $1:name FROM "${tbName}" ORDER BY "id" ASC`, [attributes]);
             return user;
         } catch (error) {
             throw error;
@@ -27,11 +27,26 @@ module.exports = class User {
         }
     }
 
-    static async findOne(user, attributes = '*') {
+    static async findOne(user) {
         let con = null;
         try {
             con = await cn.connection.connect();
-            const users = await con.oneOrNone(`SELECT $1:name FROM "${tbName}" WHERE "Email" = $2`, [attributes, user.Email]);
+            const users = await con.oneOrNone(`SELECT * FROM "${tbName}" WHERE "Email" = $1`, [user.Email]);
+            return users;
+        } catch (error) {
+            throw error;
+        } finally {
+            if (con) {
+                con.done();
+            }
+        }
+    }
+    
+    static async findById(id) {
+        let con = null;
+        try {
+            con = await cn.connection.connect();
+            const users = await con.oneOrNone(`SELECT * FROM "${tbName}" WHERE id = $1`, [id]);
             return users;
         } catch (error) {
             throw error;
@@ -46,16 +61,6 @@ module.exports = class User {
         try {
             const rt = await db.add(tbName, user);
             return rt;
-        } catch (error) {
-            throw error;
-        }
-    }
-    static async getAllUsers() {
-        let con = null;
-        try {
-            con = await cn.connection.connect();
-            const listUsers = await con.any(`SELECT * FROM "${tbName}" ORDER BY "id" ASC`);
-            return listUsers;
         } catch (error) {
             throw error;
         }
@@ -86,12 +91,12 @@ module.exports = class User {
             throw error;
         }
     }
-    static async deleteUser(userId) {
+
+    static async delete(id) {
         let con = null;
         try {
             con = await cn.connection.connect();
-            console.log("ID: ", userId);
-            await con.none(`DELETE FROM "${tbName}" WHERE id = $1`, userId);
+            await con.none(`DELETE FROM "${tbName}" WHERE id = $1`, id);
         }
         catch (error) {
             throw error;

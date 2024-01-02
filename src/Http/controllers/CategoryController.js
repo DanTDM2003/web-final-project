@@ -7,7 +7,8 @@ module.exports = {
       console.log(categories)
       res.render('product/index', {
         title: 'Home',
-        login: req.user,
+        login: req.isAuthenticated(),
+        user: req.user,
         url: req.path.Cookie,
         categories: categories
       })

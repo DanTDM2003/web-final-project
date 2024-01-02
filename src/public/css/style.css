@@ -9,7 +9,7 @@ body {
 }
 
 a {
-    color: #3F69AA;
+    color: #763faa;
     transition: 0.5s;
 }
 
@@ -40,7 +40,7 @@ h6 {
 .back-to-top {
     position: fixed;
     display: none;
-    background: #3F69AA;
+    background: #4d1f63;
     color: #ffffff;
     width: 44px;
     height: 44px;
@@ -52,6 +52,7 @@ h6 {
     bottom: 15px;
     transition: background 0.5s;
     z-index: 11;
+    opacity: 80%;
 }
 
 .back-to-top i {
@@ -70,7 +71,7 @@ h6 {
     height: 35px;
     padding: 0 15px;
     color: #666666;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
     border-radius: 0;
     margin-bottom: 15px
 }
@@ -82,19 +83,19 @@ h6 {
 
 .custom-radio .custom-control-label::before,
 .custom-checkbox .custom-control-label::before {
-    border-color: #3F69AA;
+    border-color: #763faa;
     border-radius: 0;
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::before,
 .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 button.btn {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border-radius: 0;
 }
 
@@ -126,7 +127,7 @@ button.btn {
     height: 40px;
     padding: 0 15px;
     color: #666666;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
 }
 
 .top-header .search button {
@@ -138,11 +139,11 @@ button.btn {
     padding: 0 15px;
     border: none;
     background: none;
-    color: #3F69AA;
+    color: #763faa;
 }
 
 .top-header .search button:hover {
-    background: #3F69AA;
+    background: #763faa;
     color: #ffffff;
 }
 
@@ -165,7 +166,7 @@ button.btn {
 }
 
 .top-header .user .cart i {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 18px;
 }
 
@@ -217,7 +218,7 @@ button.btn {
 @media (min-width: 768px) {
     .header,
     .header .navbar {
-        background: #3F69AA !important;
+        background: #763faa !important;
     }
     
     .header .navbar-brand {
@@ -283,7 +284,7 @@ button.btn {
 .slick-prev:focus,
 .slick-next:hover,
 .slick-next:focus {
-    color: #3F69AA;
+    color: #763faa;
     background: #ffffff;
 }
 
@@ -291,7 +292,7 @@ button.btn {
 .slick-next::before {
     font-family: "FontAwesome";
     font-size: 30px;
-    color: #3F69AA;
+    color: #763faa;
 }
 
 .slick-prev::before {
@@ -428,7 +429,7 @@ button.btn {
 .section-header h2,
 .section-header h3 {
     position: relative;
-    color: #3F69AA;
+    color: #763faa;
     font-size: 35px;
     font-weight: 700;
     text-align: center;
@@ -444,7 +445,7 @@ button.btn {
     height: 5px;
     left: calc(50% - 25px);
     bottom: 0;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .section-header p {
@@ -481,7 +482,7 @@ button.btn {
 }
 
 .feature .feature-content i {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 60px;
     margin-bottom: 10px;
 }
@@ -516,7 +517,7 @@ button.btn {
 
 .product-item .product-image a {
     display: block;
-    background: #3F69AA;
+    background: #763faa;
     margin-bottom: 15px; 
     transition: .3s;
 }
@@ -556,11 +557,10 @@ button.btn {
     width: 40px;
     height: 40px;
     padding: 6px 0;
-    margin-right: 5px;
     text-align: center;
     color: #ffffff;
     font-size: 18px;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .product-item .product-image .product-action a:last-child {
@@ -568,7 +568,28 @@ button.btn {
 }
 
 .product-item .product-image .product-action a:hover {
-    color: #3F69AA;
+    color: #763faa;
+    background: #ffffff;
+}
+
+.product-item .product-image .product-action form button {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    padding: 6px 0;
+    text-align: center;
+    color: #ffffff;
+    font-size: 18px;
+    background: #763faa;
+    border: none;
+}
+
+.product-item .product-image .product-action form button:last-child {
+    margin-right: 0;
+}
+
+.product-item .product-image .product-action form button:hover {
+    color: #763faa;
     background: #ffffff;
 }
 
@@ -591,19 +612,19 @@ button.btn {
 }
 
 .product-item .product-content .title a {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 18px;
     font-weight: 600;
 }
 
 .product-item .product-content .ratting i {
     font-size: 14px;
-    color: #3F69AA;
+    color: #763faa;
 }
 
 .product-item .product-content .price {
     font-size: 30px;
-    color: #3F69AA;
+    color: #763faa;
     font-weight: 700; 
 }
 
@@ -660,7 +681,7 @@ button.btn {
     height: 35px;
     padding: 0 15px;
     color: #666666;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
 }
 
 .product-view .product-search button {
@@ -671,7 +692,7 @@ button.btn {
     right: 1px;
     text-align: center;
     background: #ffffff;
-    color: #3F69AA;
+    color: #763faa;
     border: none;
 }
 
@@ -680,7 +701,7 @@ button.btn {
 }
 
 .product-view .product-search button:hover {
-    background: #3F69AA;
+    background: #763faa;
     color: #ffffff;
 }
 
@@ -697,7 +718,7 @@ button.btn {
     height: 35px;
     padding: 5px 10px;
     background: #ffffff;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
     text-align: left;
 }
 
@@ -720,16 +741,16 @@ button.btn {
 }
 
 .product-view .pagination .page-item .page-link {
-    color: #3F69AA;
+    color: #763faa;
     background: #ffffff;
-    border-color: #3F69AA;
+    border-color: #763faa;
     border-radius: 0;
 }
 
 .product-view .pagination .page-item:hover .page-link,
 .product-view .pagination .page-item.active .page-link {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 
@@ -751,7 +772,7 @@ button.btn {
 
 .product-detail .product-slider-single img {
     width: 100%;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .product-detail .product-content,
@@ -766,19 +787,19 @@ button.btn {
 }
 
 .product-detail .product-content .title h2 {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 25px;
     font-weight: 600;
     margin-bottom: 5px;
 }
 
 .product-detail .product-content .ratting i {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 18px;
 }
 
 .product-detail .product-content .price {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 25px;
     font-weight: 700;
     margin-bottom: 15px;
@@ -821,7 +842,7 @@ button.btn {
     padding: 2px 0;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
@@ -842,12 +863,12 @@ button.btn {
     text-align: center;
     color: #ffffff;
     font-size: 22px;
-    background: #3F69AA;
-    border: 1px solid #3F69AA;
+    background: #763faa;
+    border: 1px solid #763faa;
 }
 
 .product-detail .product-content .action a:hover {
-    color: #3F69AA;
+    color: #763faa;
     background: #ffffff;
 }
 
@@ -860,7 +881,7 @@ button.btn {
 .product-detail  .nav.nav-pills .nav-link:hover,
 .product-detail  .nav.nav-pills .nav-link.active {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .product-detail .tab-content {
@@ -893,7 +914,7 @@ button.btn {
 }
 
 .product-detail .tab-content .reviewer {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 18px;
     font-weight: 600;
 }
@@ -905,7 +926,7 @@ button.btn {
 }
 
 .product-detail .tab-content .ratting {
-    color: #3F69AA;
+    color: #763faa;
     margin-bottom: 15px;
 }
 
@@ -945,7 +966,7 @@ button.btn {
 
 .product-detail .tab-content .form button:hover {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 
@@ -965,7 +986,7 @@ button.btn {
 
 .sidebar-widget .title {
     position: relative;
-    color: #3F69AA;
+    color: #763faa;
     font-size: 24px;
     font-weight: 600;
     text-align: center;
@@ -981,7 +1002,7 @@ button.btn {
     height: 3px;
     left: calc(50% - 25px);
     bottom: 0;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .sidebar-widget.brands ul,
@@ -1003,7 +1024,7 @@ button.btn {
 
 .sidebar-widget.brands ul li a,
 .sidebar-widget.category ul li a {
-    color: #3F69AA;
+    color: #763faa;
     font-size: 16px;
     font-weight: 400;
     white-space: nowrap;
@@ -1055,14 +1076,14 @@ button.btn {
     padding: 3px 8px;
     font-size: 14px;
     font-weight: 400;
-    color: #3F69AA;
+    color: #763faa;
     background: #ffffff;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
 }
 
 .sidebar-widget.tag a:hover {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 
@@ -1083,8 +1104,8 @@ button.btn {
 
 .cart-page .table .thead-dark th {
     text-align: center;
-    background: #3F69AA;
-    border-color: #3F69AA;
+    background: #763faa;
+    border-color: #763faa;
     vertical-align: middle;
 }
 
@@ -1109,7 +1130,7 @@ button.btn {
     padding: 2px 10px;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
@@ -1133,7 +1154,7 @@ button.btn {
     padding: 0 15px;
     color: #666666;
     background: #ffffff;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
     margin-right: 10px;
 }
 
@@ -1143,7 +1164,7 @@ button.btn {
     padding: 2px 10px;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
@@ -1154,7 +1175,7 @@ button.btn {
 
 .cart-page .cart-summary .cart-content {
     padding: 30px;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .cart-page .cart-summary .cart-content h3 {
@@ -1190,15 +1211,15 @@ button.btn {
     padding: 2px 10px;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
 .cart-page .cart-summary .cart-btn button:first-child {
     margin-right: 25px;
-    color: #3F69AA;
+    color: #763faa;
     background: #ffffff;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
 }
 
 
@@ -1249,7 +1270,7 @@ button.btn {
 .checkout .checkout-summary .checkout-content,
 .checkout .checkout-payment .payment-methods {
     padding: 30px;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .checkout .checkout-summary .checkout-content h3 {
@@ -1299,7 +1320,7 @@ button.btn {
     padding: 2px 10px;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
@@ -1315,7 +1336,7 @@ button.btn {
 
 .my-account .nav.nav-pills .nav-link {
     padding: 15px 22px;
-    color: #3F69AA;
+    color: #763faa;
     font-weight: 400;
     background: rgba(63, 105, 170, .1);
     border-radius: 0;
@@ -1325,7 +1346,7 @@ button.btn {
 .my-account .nav.nav-pills .nav-link:hover,
 .my-account .nav.nav-pills .nav-link.active {
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .my-account .tab-content {
@@ -1341,8 +1362,8 @@ button.btn {
 
 .my-account .tab-content .table .thead-dark th {
     text-align: center;
-    background: #3F69AA;
-    border-color: #3F69AA;
+    background: #763faa;
+    border-color: #763faa;
     vertical-align: middle;
 }
 
@@ -1358,7 +1379,7 @@ button.btn {
     padding: 2px 15px;
     text-align: center;
     color: #ffffff;
-    background: #3F69AA;
+    background: #763faa;
     border: none;
 }
 
@@ -1381,7 +1402,7 @@ button.btn {
     position: relative;
     padding: 60px 0;
     text-align: center;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .newsletter .section-header h2,
@@ -1417,7 +1438,7 @@ button.btn {
     right: 0;
     padding: 0 15px;
     border: none;
-    background: #3F69AA;
+    background: #763faa;
     color: #ffffff;
     border: 1px solid #ffffff;
 }
@@ -1477,7 +1498,7 @@ button.btn {
 }
 
 .contact .contact-info h4 i {
-    color: #3F69AA;
+    color: #763faa;
     margin-right: 5px;
 }
 
@@ -1494,15 +1515,15 @@ button.btn {
     padding: 3px 0;
     text-align: center;
     font-size: 20px;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
 }
 
 .contact .social a i {
-    color: #3F69AA;
+    color: #763faa;
 }
 
 .contact .social a:hover {
-    background: #3F69AA;
+    background: #763faa;
 }
 
 .contact .social a:hover i {
@@ -1525,7 +1546,7 @@ button.btn {
     font-size: 16px;
     padding: 10px 15px;
     border: none;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
     border-radius: 0;
     box-shadow: none;
 }
@@ -1537,17 +1558,17 @@ button.btn {
 
 .contact .form button[type="submit"] {
     padding: 6px 25px 7px 25px;
-    color: #3F69AA;
+    color: #763faa;
     letter-spacing: 1px;
     transition: 0.3s;
     cursor: pointer;
     border-radius: 0;
-    border: 1px solid #3F69AA;
+    border: 1px solid #763faa;
     background: #ffffff;
 }
 
 .contact .form button[type="submit"]:hover {
-    background: #3F69AA;
+    background: #763faa;
     color: #FFFFFF;
 }
 
@@ -1572,7 +1593,7 @@ button.btn {
 .footer {
     position: relative;
     padding: 60px 0 0 0;
-    background: #3F69AA;
+    background: #763faa;
 }
 
 @media (min-width: 992px) {
@@ -1666,7 +1687,7 @@ button.btn {
 .footer .payment {
     padding-top: 25px;
     padding-bottom: 25px;
-    border-top: 1px solid #4977bf;
+    border-top: 1px solid #3f1272;
 }
 
 @media (min-width: 992px) {

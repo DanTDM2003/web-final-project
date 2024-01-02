@@ -1,19 +1,18 @@
-<%- include('../partials/head.ejs') %> <%- include('../partials/header.ejs') %>
-<%- include('../partials/adminNav.ejs') %>
+<%- include('../partials/head.ejs') %>
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav.ejs') %>
 
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container">
     <ul class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">User</a></li>
-      <li class="breadcrumb-item active">My Account</li>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
     </ul>
   </div>
 </div>
 <!-- Breadcrumb End -->
 
-<!-- My Account Start -->
 <div class="my-account">
   <div class="container">
     <div class="row">
@@ -28,59 +27,37 @@
             id="dashboard-nav"
             data-toggle="pill"
             href="#dashboard-tab"
-            role="tab"
-            >Dashboard</a
-          >
+            role="tab">Dashboard</a>
           <a
             class="nav-link"
             id="manage-users-nav"
             data-toggle="pill"
             href="#manage-users-tab"
-            role="tab"
-            >Manage users</a
-          >
+            role="tab">Manage users</a>
           <a
             class="nav-link"
             id="add-product-nav"
             data-toggle="pill"
             href="#add-product-tab"
-            role="tab"
-            >Add product</a
-          >
+            role="tab">Add product</a>
           <a
             class="nav-link"
             id="orders-nav"
             data-toggle="pill"
             href="#orders-tab"
-            role="tab"
-            >Orders</a
-          >
+            role="tab">Orders</a>
           <a
             class="nav-link"
             id="payment-nav"
             data-toggle="pill"
             href="#payment-tab"
-            role="tab"
-            >Payment Method</a
-          >
+            role="tab">Payment Method</a>
           <a
             class="nav-link"
             id="manage-products-nav"
             data-toggle="pill"
             href="#manage-products-tab"
-            role="tab"
-            >Manage products</a
-          >
-
-          <a
-            class="nav-link"
-            id="account-nav"
-            data-toggle="pill"
-            href="#account-tab"
-            role="tab"
-            >Account Details</a
-          >
-          <a class="nav-link" href="index.html">Logout</a>
+            role="tab">Manage products</a>
         </div>
       </div>
       <div class="col-md-9">
@@ -109,7 +86,7 @@
           >
             <form
               id="userForm"
-              action="/admin/update"
+              action="/users/update"
               method="post"
               onsubmit="submitForm()"
             >
@@ -124,9 +101,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% listUsers.forEach(function(user) { %>
+                  <% users.forEach((user, index) => { %>
                   <tr style="text-decoration: none" hasChange="false">
-                    <th scope="row"><%= user.id %></th>
+                    <th scope="row"><%= index + 1 %></th>
                     <th>
                       <input
                         type="text"
@@ -156,7 +133,7 @@
                     </th>
                     <th>
                       <a
-                        href="/admin/delete/users/<%= user.id %>"
+                        href="/user/delete/<%= user.id %>"
                         class="fa fa-trash"
                       ></a>
                     </th>
@@ -164,7 +141,7 @@
                   <% }); %>
                 </tbody>
               </table>
-              <button type="submit">Edit</button>
+              <button>Save</button>
             </form>
             <script src="/js/admin/manage-users.js"></script>
           </div>
@@ -174,22 +151,8 @@
             role="tabpanel"
             aria-labelledby="add-product-nav"
           >
-            <!-- <form
-              action="/admin/upload-profile-pic"
-              method="POST"
-              enctype="multipart/form-data"
-            >
-              <input type="file" id="imgInp" name="profile_pic" />
-              <img
-                id="imgReview"
-                src="#"
-                alt="your image"
-                style="display: none; max-width: 300px; max-height: 300px"
-              />
-              <button type="submit">Upload</button>
-            </form> -->
             <form
-              action="/admin/upload-product"
+              action="/product/create"
               method="POST"
               enctype="multipart/form-data"
             >
@@ -201,7 +164,7 @@
                     class="form-control"
                     id="product-name"
                     placeholder="Enter product's name"
-                    name="productName"
+                    name="Name"
                   />
                 </div>
               </div>
@@ -212,7 +175,7 @@
                   class="form-control"
                   id="short-description"
                   placeholder="My product"
-                  name="shortDescription"
+                  name="Short_Description"
                 />
               </div>
               <div class="form-group">
@@ -222,7 +185,7 @@
                   class="form-control"
                   id="full-description"
                   placeholder="My product"
-                  name="fullDescription"
+                  name="Full_Description"
                 />
               </div>
               <div
@@ -236,7 +199,7 @@
                     min="0"
                     class="form-control"
                     id="product-quantity"
-                    name="quantity"
+                    name="Quantity"
                   />
                 </div>
                 <div class="form-group col-md-3">
@@ -244,7 +207,7 @@
                   <select
                     id="product-type"
                     class="form-control"
-                    name="category"
+                    name="Category_id"
                   >
                     <option selected>Choose...</option>
                     <option>...</option>
@@ -258,7 +221,7 @@
                     id="product-price"
                     placeholder="Enter price"
                     min="0"
-                    name="price"
+                    name="Price"
                   />
                 </div>
               </div>
@@ -268,7 +231,7 @@
                   <input
                     type="file"
                     id="imgInp"
-                    name="profile_pic"
+                    name="Thumbnail"
                     style="padding: 5px 5px; height: fit-content"
                   />
                 </div>
@@ -383,8 +346,8 @@
           >
             <form
               id="productForm"
-              action="/admin/edit-product"
-              method="post"
+              action="/product/update"
+              method="POST"
               onsubmit="submitProductForm()"
             >
               <table class="table table-striped-columns">
@@ -401,55 +364,55 @@
                   </tr>
                 </thead>
                 <tbody id="product-tbody">
-                  <% listProducts.forEach(function(product) { %>
+                  <% products.forEach((product, index) => { %>
                   <tr style="text-decoration: none" hasProductChange="false">
-                    <th scope="row"><%= product.id %></th>
-                    <th>
+                    <td scope="row"><%= index + 1 %></td>
+                    <td>
                       <input
                         type="text"
                         class="productInput"
                         data-property="product-name"
-                        value="<%= product.name %>"
+                        value="<%= product.Name %>"
                         oninput="setProductChange(this)"
                       />
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <input
                         type="number"
                         class="productInput"
                         data-property="product-price"
-                        value="<%= product.price %>"
+                        value="<%= product.Price %>"
                         oninput="setProductChange(this)"
                       />
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <input
                         type="text"
                         class="productInput"
                         data-property="short-description"
-                        value="<%= product.short_description %>"
+                        value="<%= product.Short_Description %>"
                         oninput="setProductChange(this)"
                       />
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <input
                         type="number"
                         class="productInput"
                         data-property="quantity"
-                        value="<%= product.quantity %>"
+                        value="<%= product.Quantity %>"
                         oninput="setProductChange(this)"
                       />
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <input
                         type="text"
                         class="productInput"
                         data-property="full-description"
-                        value="<%= product.full_description %>"
+                        value="<%= product.Full_Description %>"
                         oninput="setProductChange(this)"
                       />
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <select class="productInput" data-property="category">
                         <option selected>Choose...</option>
                         <option>a</option>
@@ -457,70 +420,25 @@
                         <option>c</option>
                         <option>d</option>
                       </select>
-                    </th>
-                    <th>
+                    </td>
+                    <td>
                       <a
-                        href="/admin/delete/products/<%= product.id %>"
+                        href="/product/delete/<%= product.id %>"
                         class="fa fa-trash"
                       ></a>
-                    </th>
+                    </td>
                   </tr>
                   <% }); %>
                 </tbody>
               </table>
-              <button type="submit">Edit</button>
+              <button class="mt-4">Save</button>
             </form>
             <script src="/js/admin/manage-product.js"></script>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="account-tab"
-            role="tabpanel"
-            aria-labelledby="account-nav"
-          >
-            <h4>Account Details</h4>
-            <div class="row">
-              <div class="col-md-6">
-                <input type="text" placeholder="First Name" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Last Name" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Mobile" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Email" />
-              </div>
-              <div class="col-md-12">
-                <input type="text" placeholder="Address" />
-              </div>
-              <div class="col-md-12">
-                <button>Update Account</button>
-                <br /><br />
-              </div>
-            </div>
-            <h4>Password change</h4>
-            <div class="row">
-              <div class="col-md-12">
-                <input type="password" placeholder="Current Password" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="New Password" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Confirm Password" />
-              </div>
-              <div class="col-md-12">
-                <button>Save Changes</button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- My Account End -->
 
 <%- include('../partials/footer.ejs') %>
