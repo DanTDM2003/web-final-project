@@ -3,12 +3,14 @@ const router = express.Router();
 
 const Products = require('./../models/Products.js');
 const Users = require('./../models/Users.js')
+const Categories = require('./../models/Categories.js')
 
 const AdminMiddleware = require('../middlewares/Admin.js');
 
 router.get('/dashboard', AdminMiddleware, async (req, res) => {
     const users = await Users.findAll();
     const products = await Products.fetchAll();
+    const categories = await Categories.fetchAll();
 
     res.render('admin/index', {
         title: 'Dashboard',
@@ -16,7 +18,8 @@ router.get('/dashboard', AdminMiddleware, async (req, res) => {
         user: req.user,
         url: req.path,
         users: users,
-        products: products
+        products: products,
+        categories: categories
     });
 });
 

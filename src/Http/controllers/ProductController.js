@@ -91,7 +91,7 @@ module.exports = {
       Short_Description: data.Short_Description,
       Quantity: data.Quantity,
       Full_Description: data.Full_Description,
-      Category_id: 2,
+      Category_id: data.Category_id,
       Thumbnail: req.file.filename
     }
     await Products.add(product);

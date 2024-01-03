@@ -12,13 +12,13 @@ const submitProductForm = () => {
     let products = [];
 
     trList.forEach((tr) => {
-        const id = tr.querySelector("th").innerText;
+        const id = tr.querySelector("td").innerText;
         const Name = tr.querySelector('input[data-property="product-name"]').value;
         const Price = tr.querySelector('input[data-property="product-price"]').value;
         const Short_Description = tr.querySelector('input[data-property="short-description"]').value;
         const Quantity = tr.querySelector('input[data-property="quantity"]').value;
         const Full_Description = tr.querySelector('input[data-property="full-description"]').value;
-        const Category_id = 2;
+        const Category_id = tr.querySelector('select[data-property="category"]').value;
         const product = {
             id: id,
             Name: Name,

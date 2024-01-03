@@ -206,11 +206,16 @@
                   <label for="product-type">Category</label>
                   <select
                     id="product-type"
-                    class="form-control"
+                    class="form-control border-0"
                     name="Category_id"
                   >
-                    <option selected>Choose...</option>
-                    <option>...</option>
+                    <% for (let [index, category] of categories.entries()) { %>
+                      <% if (index == 0) { %>
+                          <option selected value="<%= category.id %>"><%= category.Name %></option>
+                      <% } else { %>
+                          <option value="<%= category.id %>"><%= category.Name %></option>
+                      <% } %>
+                    <% } %>
                   </select>
                 </div>
                 <div class="form-group col-md-4">
@@ -365,69 +370,67 @@
                 </thead>
                 <tbody id="product-tbody">
                   <% products.forEach((product, index) => { %>
-                  <tr style="text-decoration: none" hasProductChange="false">
-                    <td scope="row"><%= index + 1 %></td>
-                    <td>
-                      <input
-                        type="text"
-                        class="productInput"
-                        data-property="product-name"
-                        value="<%= product.Name %>"
-                        oninput="setProductChange(this)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="productInput"
-                        data-property="product-price"
-                        value="<%= product.Price %>"
-                        oninput="setProductChange(this)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="productInput"
-                        data-property="short-description"
-                        value="<%= product.Short_Description %>"
-                        oninput="setProductChange(this)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="number"
-                        class="productInput"
-                        data-property="quantity"
-                        value="<%= product.Quantity %>"
-                        oninput="setProductChange(this)"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="productInput"
-                        data-property="full-description"
-                        value="<%= product.Full_Description %>"
-                        oninput="setProductChange(this)"
-                      />
-                    </td>
-                    <td>
-                      <select class="productInput" data-property="category">
-                        <option selected>Choose...</option>
-                        <option>a</option>
-                        <option>b</option>
-                        <option>c</option>
-                        <option>d</option>
-                      </select>
-                    </td>
-                    <td>
-                      <a
-                        href="/product/delete/<%= product.id %>"
-                        class="fa fa-trash"
-                      ></a>
-                    </td>
-                  </tr>
+                    <tr style="text-decoration: none" hasProductChange="false">
+                      <td scope="row"><%= product.product_id %></td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="product-name"
+                          value="<%= product.Name %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          class="productInput"
+                          data-property="product-price"
+                          value="<%= product.Price %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="short-description"
+                          value="<%= product.Short_Description %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          class="productInput"
+                          data-property="quantity"
+                          value="<%= product.Quantity %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="full-description"
+                          value="<%= product.Full_Description %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <select onchange="setProductChange(this)" class="productInput" data-property="category" class="border-0">
+                          <% for (let [index, category] of categories.entries()) { %>
+                              <option <%= product.Category_id == category.id ? 'selected' : '' %> value="<%= category.id %>"><%= category.Name %></option>
+                          <% } %>
+                        </select>
+                      </td>
+                      <td>
+                        <a
+                          href="/product/delete/<%= product.id %>"
+                          class="fa fa-trash"
+                        ></a>
+                      </td>
+                    </tr>
                   <% }); %>
                 </tbody>
               </table>
