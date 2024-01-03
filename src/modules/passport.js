@@ -1,7 +1,11 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
-const Users = require('../models/Users.js');
+
 const LoginStrategy = require('../utilities/LoginStrategy.js');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+
+const Users = require('../models/Users.js');
+const Carts = require('../models/Carts.js');
 
 passport.serializeUser((user, done) => {
     done(null, user.Email);
@@ -10,6 +14,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser(async (user, done) => {
     const auth = await Users.findOne({ Email: user });
     delete auth.Password;
+    delete auth.Login_by;
     if (auth) {
         return done(null, auth);
     }
@@ -35,4 +40,32 @@ module.exports = (app) => {
             done({ error: "Something wrong happens." });
         }
     }));
+    passport.use(new GoogleStrategy({
+            clientID: '48072687713-pfnnfq40s94op9g3vok6b299g1ohq3oc.apps.googleusercontent.com',
+            clientSecret: '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',
+            callbackURL: "https://localhost:8888/auth/google/callback"
+        },
+        async function(accessToken, refreshToken, profile, done) {
+            try {
+                let user = await Users.findOne({ Email: profile.emails[0].value });
+                
+                if (!user) {
+                    await Users.add({ Fullname: profile.displayName, Username: profile.displayName, Email: profile.emails[0].value, Role: 'User', Login_by: 'Google' });
+                    user = await Users.findOne({ Email: profile.emails[0].value });
+                    await Carts.add({ User_id: user.id, Cart: '[]' });
+                    return done(null, user);
+                } else if (user) {
+                    if (user.Login_by === "Google") {
+                        return done(null, user);
+                    } else {
+                        return done({ credential: "This email has been used." }, null);
+                    }
+                }
+    
+                done({ credential: "Your credential is invalid." }, null);
+            } catch (error) {
+                done({ error: "Something wrong happens." });
+            }
+        }
+    ));
 }

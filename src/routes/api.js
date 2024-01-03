@@ -3,6 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const appRoot = require('app-root-path');
 const path = require('path');
+const passport = require('passport');
 
 const SessionController = require('../Http/controllers/SessionController.js');
 const AccountController = require('../Http/controllers/AccountController.js');
@@ -88,5 +89,28 @@ router.get('/products/pagination', async (req, res) => {
 router.post('/cart/add', AuthMiddleware, CartController.store);
 router.post('/cart/update', AuthMiddleware, CartController.update);
 router.post('/cart/delete/:id', AuthMiddleware, CartController.delete);
+
+router.get('/auth/google', passport.authenticate('google', {scope: ['email', 'profile']}));
+router.get('/auth/google/callback', (req, res, next) => passport.authenticate('google', (err, user, info) => {
+        if (err) {
+                return res.render("session/create", {
+                        title: 'Login',
+                        errors: err,
+                        login: req.isAuthenticated(),
+                        url: req.path,
+                        user: req.user
+                    });
+        }
+        req.login(user, (err) => {
+                if (err) {
+                        return res.redirect('/login');
+                }
+                delete user.Password;
+                delete user.Login_by;
+                const token = JWTAction.createJWT(user);
+                Cookies.createCookie(res, 'user', token, true, req.body.remember);
+                return res.redirect('/');
+        });
+})(req, res, next));
 
 module.exports = router;

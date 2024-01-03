@@ -31,15 +31,14 @@ module.exports = {
             const user = await Users.findOne({ Email: Email, Password: Password });
             
             if (!user) {
-                await Users.add({ Fullname, Username, Password: bcrypt.hashSync(Password, 10), Email, Role: "User" });
+                await Users.add({ Fullname, Username, Password: bcrypt.hashSync(Password, 10), Email, Role: "User", Login_by: "Normal" });
                 const newUser = await Users.findOne({ Email });
-                await Carts.add({ User_id: newUser.id, Cart: [] });
+                await Carts.add({ User_id: newUser.id, Cart: '[]' });
 
                 return req.login({ Fullname, Username, Email, Role: "User" }, (err) => {
                     return res.redirect('/');
                 })
             } else {
-                console.log(11);
                 form.setError('credential', "The email is already used.");
             }
         }

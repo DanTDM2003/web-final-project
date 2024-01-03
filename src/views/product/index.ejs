@@ -141,7 +141,6 @@
                                                     <input type="hidden" name="quantity" id="quantity" value="1">
                                                     <button><i class="fa fa-cart-plus"></i></button>
                                                 </form>
-                                                <a href="#"><i class="fa fa-heart"></i></a>
                                                 <a href="/product/${product.product_id}"><i class="fa fa-search"></i></a>
                                             </div>
                                         </div>
@@ -216,7 +215,7 @@
                     console.log(response);
                 },
                 error: function (error) {
-                    console.log('Error:', error);
+                    location.replace('/login');
                 }
             });
         }

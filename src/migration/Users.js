@@ -13,12 +13,13 @@ module.exports = async () => {
                     "Username" VARCHAR,
                     "Password" VARCHAR,
                     "Email" VARCHAR,
-                    "Role" TEXT
+                    "Role" TEXT,
+                    "Login_by" TEXT
                 );
                 
-                INSERT INTO "Users"("Fullname","Username","Password","Email","Role")
-                VALUES  ('Hưng','DanTDM2003','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung@gmail.com','Admin'),
-                        ('Hưng','Hưng đẹp trai','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung1@gmail.com','User')
+                INSERT INTO "Users"("Fullname","Username","Password","Email","Role","Login_by")
+                VALUES  ('Hưng','DanTDM2003','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung@gmail.com','Admin','Normal'),
+                        ('Hưng','Hưng đẹp trai','$2b$10$NGuiSA8WTiiHsP6hHx/aKO4c2Gjks2Rs/eufkXtYC.gpNwFvjZEhS','hung1@gmail.com','User','Normal')
                 `;
 
                 return cn.connection.query(createTableQuery)

@@ -13,7 +13,7 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
-
+<% let totalPrice = 0; %>
 
 <!-- Cart Start -->
 <div class="cart-page">
@@ -34,6 +34,7 @@
                         </thead>
                         <tbody class="align-middle">
                             <% for (let item of cart) { %>
+                                <% totalPrice += +item.product.Price * +item.quantity %>
                                 <tr>
                                     <td><a href="#"><img src="/img/thumbnails/<%= item.product.Thumbnail %>" alt="Image"></a></td>
                                     <td><a href="#"><%= item.product.product_name %></a></td>
@@ -69,9 +70,7 @@
                 <div class="cart-summary">
                     <div class="cart-content">
                         <h3>Cart Summary</h3>
-                        <p>Sub Total<span>$22</span></p>
-                        <p>Shipping Cost<span>$1</span></p>
-                        <h4>Grand Total<span>$23</span></h4>
+                        <h4>Grand Total<span><%= totalPrice %></span></h4>
                     </div>
                     <div class="cart-btn">
                         <button id="update-btn">Update Cart</button>
@@ -96,7 +95,7 @@
                     location.reload();
                 },
                 error: function (error) {
-                    console.log('Error:', error);
+                    location.replace('/login');
                 }
             });
         }
