@@ -16,8 +16,8 @@ module.exports = async () => {
                 );
 
                 INSERT INTO "Carts"("User_id","Cart")
-                VALUES  (1, '{}'),
-                        (2, '{}')
+                VALUES  (1, '[]'),
+                        (2, '[]')
                 `;
 
                 return cn.connection.query(createTableQuery)
