@@ -39,10 +39,10 @@
                                     <div class="dropdown">
                                         <a style="text-decoration: none;" class="dropdown-toggle" id="sort" data-toggle="dropdown">All</a>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a style="text-decoration: none;" class="dropdown-item" data-sort="newest">Newest</a>
-                                            <a style="text-decoration: none;" class="dropdown-item" data-sort="popular">Popular</a>
-                                            <a style="text-decoration: none;" class="dropdown-item" data-sort="price-up">Price <i class="fa fa-arrow-up"></i></a>
-                                            <a style="text-decoration: none;" class="dropdown-item" data-sort="price-down">Price <i class="fa fa-arrow-down"></i></a>
+                                            <a style="text-decoration: none;" class="dropdown-item dropdown-item1" data-sort="newest">Newest</a>
+                                            <a style="text-decoration: none;" class="dropdown-item dropdown-item1" data-sort="popular">Popular</a>
+                                            <a style="text-decoration: none;" class="dropdown-item dropdown-item1" data-sort="price-up">Price <i class="fa fa-arrow-up"></i></a>
+                                            <a style="text-decoration: none;" class="dropdown-item dropdown-item1" data-sort="price-down">Price <i class="fa fa-arrow-down"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -220,7 +220,7 @@
             });
         }
 
-        $('.dropdown-item').click(function (e) {
+        $('.dropdown-item1').click(function (e) {
             e.preventDefault();
             sort = $(this).data('sort');
             let currentUrl = new URL(window.location.href);
