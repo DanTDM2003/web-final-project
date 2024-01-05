@@ -46,6 +46,7 @@ module.exports = class Category {
     }
   }
   static async add(obj) {
+    console.log("cat:", obj)
     let con = null;
     try {
       con = await db.connection.connect()
@@ -54,9 +55,6 @@ module.exports = class Category {
       return;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
 

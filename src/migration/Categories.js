@@ -2,9 +2,9 @@ const cn = require('../config/database.js');
 
 module.exports = async () => {
     let checkTableQuery = "SELECT EXISTS (SELECT FROM information_schema.tables WHERE table_name = 'Categories')";
-    
+
     await cn.connection.oneOrNone(checkTableQuery)
-        .then((result) => { 
+        .then((result) => {
             const exists = result.exists;
             if (!exists) {
                 const createTableQuery = `CREATE TABLE "Categories" (

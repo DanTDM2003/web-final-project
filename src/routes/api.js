@@ -45,7 +45,7 @@ router.get('/product/:id', ProductController.show);
 router.get('/product/delete/:id', AdminMiddleware, ProductController.destroy);
 router.post('/product/update', AdminMiddleware, ProductController.update);
 router.post('/category/update', AdminMiddleware, CategoriesController.update);
-router.post('/category/create', AdminMiddleware, CategoriesController.update);
+router.post('/category/create', AdminMiddleware, CategoriesController.store);
 router.post('/product/create', AdminMiddleware, upload.single('Thumbnail'), ProductController.store);
 
 router.post('/users/update', AdminMiddleware, AccountController.update);
