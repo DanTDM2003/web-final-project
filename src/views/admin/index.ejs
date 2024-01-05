@@ -42,6 +42,12 @@
             role="tab">Add product</a>
           <a
             class="nav-link"
+            id="add-category-nav"
+            data-toggle="pill"
+            href="#add-category-tab"
+            role="tab">Add category</a>
+          <a
+            class="nav-link"
             id="orders-nav"
             data-toggle="pill"
             href="#orders-tab"
@@ -52,12 +58,19 @@
             data-toggle="pill"
             href="#payment-tab"
             role="tab">Payment Method</a>
-          <a
+          
+            <a
             class="nav-link"
             id="manage-products-nav"
             data-toggle="pill"
             href="#manage-products-tab"
             role="tab">Manage products</a>
+            <a
+            class="nav-link"
+            id="manage-category-nav"
+            data-toggle="pill"
+            href="#manage-category-tab"
+            role="tab">Manage category</a>
         </div>
       </div>
       <div class="col-md-9">
@@ -345,6 +358,54 @@
           </div>
           <div
             class="tab-pane fade"
+            id="add-category-tab"
+            role="tabpanel"
+            aria-labelledby="add-category-nav"
+          >
+            <h4>hello</h4>
+            
+          </div>
+          <div
+            class="tab-pane fade"
+            id="manage-category-tab"
+            role="tabpanel"
+            aria-labelledby="manage-category-nav"
+          >
+          <form
+          id="categoryForm"
+          action="/category/update"
+          method="POST"
+          onsubmit="submitCategoryForm()"
+        >
+          <table class="table table-striped-columns">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+              </tr>
+            </thead>
+            <tbody id="category-tbody">
+              <% categories.forEach((cat, index) => { %>
+                <tr style="text-decoration: none" hasCategoryChange="false">
+                  <td scope="row"><%= cat.id %></td>
+                  <td>
+                    <input
+                      type="text"
+                      class="category"
+                      data-property="category-name"
+                      value="<%= cat.Name %>"
+                      oninput="setCategoryChange(this)"
+                    />
+                  </td>
+              <% }); %>
+            </tbody>
+          </table>
+          <button class="mt-4">Save</button>
+        </form>
+        <script src="/js/admin/manage-category.js"></script>
+          </div>
+          <div
+            class="tab-pane fade"
             id="manage-products-tab"
             role="tabpanel"
             aria-labelledby="manage-products-nav"
@@ -366,6 +427,7 @@
                     <th scope="col">Full description</th>
                     <th scope="col">Category</th>
                     <th scope="col">Delete</th>
+                    <th scope="col">Update thumbnail</th>
                   </tr>
                 </thead>
                 <tbody id="product-tbody">
@@ -426,8 +488,14 @@
                       </td>
                       <td>
                         <a
-                          href="/product/delete/<%= product.id %>"
+                          href="/product/delete/<%= product.product_id %>"
                           class="fa fa-trash"
+                        ></a>
+                      </td>
+                      <td>
+                        <a
+                          href="/update-thumbnail-form/<%= product.product_id %>"
+                          class="fa fa-image"
                         ></a>
                       </td>
                     </tr>

@@ -73,5 +73,5 @@ const server = https.createServer(
 )
 
 server.listen(port, host, () => {
-    console.log(`Server has started on http://127.0.0.1:${port}.`);
+    console.log(`Server has started on https://localhost:${port}.`);
 });

@@ -26,7 +26,8 @@
     "passport-strategy": "^1.0.0",
     "pg-promise": "^11.5.4",
     "sanitize-html": "^2.11.0",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
