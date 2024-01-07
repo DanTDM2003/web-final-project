@@ -10,6 +10,8 @@ const AccountController = require('../Http/controllers/AccountController.js');
 const ProductController = require('../Http/controllers/ProductController.js');
 const CartController = require('../Http/controllers/CartController.js');
 const CategoriesController = require('../Http/controllers/CategoryController.js');
+const WalletController = require('../Http/controllers/WalletController.js')
+
 const AuthMiddleware = require('../middlewares/Auth.js');
 const GuestMiddleware = require('../middlewares/Guest.js');
 const AdminMiddleware = require('../middlewares/Admin.js');
@@ -114,5 +116,7 @@ router.get('/auth/google/callback', (req, res, next) => passport.authenticate('g
                 return res.redirect('/');
         });
 })(req, res, next));
+
+router.post('/checkout', WalletController.update);
 
 module.exports = router;
