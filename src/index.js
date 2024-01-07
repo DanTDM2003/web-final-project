@@ -3,7 +3,8 @@ const express = require('express');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const sanitizeHtml = require('sanitize-html');
-const flash = require('express-flash');
+const fs = require('fs');
+const https = require('https');
 
 const app = express();
 const viewEngine = require('./config/viewEngine.js');
@@ -50,7 +51,7 @@ app.use((req, res, next) => {
 
 app.use(require('./routes/web.js'));
 app.use(require('./routes/api.js'));
-app.use('/admin', require('./routes/admin.js'))
+app.use(require('./routes/admin.js'))
 
 app.use((req, res, next) => {
     const error = new Error('Not Found');
@@ -63,8 +64,14 @@ app.use((err, req, res, next) => {
     helpers.abort(req, res, err.status);
 });
 
-// app.listen(port, host, () => {
-//     console.log("Server has started.");
-// });
+const server = https.createServer(
+    {
+        key: fs.readFileSync("key.pem"),
+        cert: fs.readFileSync("cert.pem")
+    },
+    app
+)
 
-app.listen(port, () => console.log(`Server listening on http://127.0.0.1:${port}/`))
+server.listen(port, host, () => {
+    console.log(`Server has started on https://localhost:${port}.`);
+});

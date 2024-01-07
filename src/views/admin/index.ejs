@@ -1,19 +1,18 @@
-<%- include('../partials/head.ejs') %> <%- include('../partials/header.ejs') %>
-<%- include('../partials/adminNav.ejs') %>
+<%- include('../partials/head.ejs') %>
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav.ejs') %>
 
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
   <div class="container">
     <ul class="breadcrumb">
-      <li class="breadcrumb-item"><a href="#">Home</a></li>
-      <li class="breadcrumb-item"><a href="#">User</a></li>
-      <li class="breadcrumb-item active">My Account</li>
+      <li class="breadcrumb-item"><a href="/">Home</a></li>
+      <li class="breadcrumb-item active">Dashboard</li>
     </ul>
   </div>
 </div>
 <!-- Breadcrumb End -->
 
-<!-- My Account Start -->
 <div class="my-account">
   <div class="container">
     <div class="row">
@@ -28,49 +27,50 @@
             id="dashboard-nav"
             data-toggle="pill"
             href="#dashboard-tab"
-            role="tab"
-            >Dashboard</a
-          >
+            role="tab">Dashboard</a>
           <a
             class="nav-link"
             id="manage-users-nav"
-            href="/admin/manage-users"
-            role="tab"
-            >Manage users</a
-          >
+            data-toggle="pill"
+            href="#manage-users-tab"
+            role="tab">Manage users</a>
+          <a
+            class="nav-link"
+            id="add-product-nav"
+            data-toggle="pill"
+            href="#add-product-tab"
+            role="tab">Add product</a>
+          <a
+            class="nav-link"
+            id="add-category-nav"
+            data-toggle="pill"
+            href="#add-category-tab"
+            role="tab">Add category</a>
           <a
             class="nav-link"
             id="orders-nav"
             data-toggle="pill"
             href="#orders-tab"
-            role="tab"
-            >Orders</a
-          >
+            role="tab">Orders</a>
           <a
             class="nav-link"
             id="payment-nav"
             data-toggle="pill"
             href="#payment-tab"
-            role="tab"
-            >Payment Method</a
-          >
-          <a
+            role="tab">Payment Method</a>
+          
+            <a
             class="nav-link"
-            id="address-nav"
+            id="manage-products-nav"
             data-toggle="pill"
-            href="#address-tab"
-            role="tab"
-            >address</a
-          >
-          <a
+            href="#manage-products-tab"
+            role="tab">Manage products</a>
+            <a
             class="nav-link"
-            id="account-nav"
+            id="manage-category-nav"
             data-toggle="pill"
-            href="#account-tab"
-            role="tab"
-            >Account Details</a
-          >
-          <a class="nav-link" href="index.html">Logout</a>
+            href="#manage-category-tab"
+            role="tab">Manage category</a>
         </div>
       </div>
       <div class="col-md-9">
@@ -90,6 +90,208 @@
               Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
               eros. Aliquam et sapien eget arcu rhoncus scelerisque.
             </p>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="manage-users-tab"
+            role="tabpanel"
+            aria-labelledby="manage-users-nav"
+          >
+            <form
+              id="userForm"
+              action="/users/update"
+              method="post"
+              onsubmit="submitForm()"
+            >
+              <table class="table table-striped-columns">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Fullname</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% users.forEach((user, index) => { %>
+                  <tr style="text-decoration: none" hasChange="false">
+                    <th scope="row"><%= index + 1 %></th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Fullname"
+                        value="<%= user.Fullname %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Username"
+                        value="<%= user.Username %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        class="userInput"
+                        data-property="Email"
+                        value="<%= user.Email %>"
+                        oninput="setChange(this)"
+                      />
+                    </th>
+                    <th>
+                      <a
+                        href="/user/delete/<%= user.id %>"
+                        class="fa fa-trash"
+                      ></a>
+                    </th>
+                  </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <button>Save</button>
+            </form>
+            <script src="/js/admin/manage-users.js"></script>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="add-product-tab"
+            role="tabpanel"
+            aria-labelledby="add-product-nav"
+          >
+            <form
+              action="/product/create"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="product-name">Product name</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="product-name"
+                    placeholder="Enter product's name"
+                    name="Name"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="short-description">Short description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="short-description"
+                  placeholder="My product"
+                  name="Short_Description"
+                />
+              </div>
+              <div class="form-group">
+                <label for="full-description">Full description</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="full-description"
+                  placeholder="My product"
+                  name="Full_Description"
+                />
+              </div>
+              <div
+                class="form-row"
+                style="display: flex; justify-content: space-between"
+              >
+                <div class="form-group col-md-4">
+                  <label for="product-quantity">Quantity</label>
+                  <input
+                    type="number"
+                    min="0"
+                    class="form-control"
+                    id="product-quantity"
+                    name="Quantity"
+                  />
+                </div>
+                <div class="form-group col-md-3">
+                  <label for="product-type">Category</label>
+                  <select
+                    id="product-type"
+                    class="form-control border-0"
+                    name="Category_id"
+                  >
+                    <% for (let [index, category] of categories.entries()) { %>
+                      <% if (index == 0) { %>
+                          <option selected value="<%= category.id %>"><%= category.Name %></option>
+                      <% } else { %>
+                          <option value="<%= category.id %>"><%= category.Name %></option>
+                      <% } %>
+                    <% } %>
+                  </select>
+                </div>
+                <div class="form-group col-md-4">
+                  <label for="product-price">Price</label>
+                  <input
+                    type="number"
+                    class="form-control"
+                    id="product-price"
+                    placeholder="Enter price"
+                    min="0"
+                    name="Price"
+                  />
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="imgInp">Product's image</label>
+                  <input
+                    type="file"
+                    id="imgInp"
+                    name="Thumbnail"
+                    style="padding: 5px 5px; height: fit-content"
+                  />
+                </div>
+              </div>
+              <div
+                class="form-group col-md-12"
+                style="text-align: center; margin-bottom: 10px"
+              >
+                <center>
+                  <img
+                    id="imgReview"
+                    src="#"
+                    alt="your image"
+                    style="
+                      display: none;
+                      width: 100%;
+                      max-height: 500px;
+                      border: 2px blue;
+                      border-style: dashed;
+                      padding: 10px;
+                    "
+                  />
+                </center>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+
+            <script>
+              const imgInp = document.getElementById("imgInp");
+              const imgReview = document.getElementById("imgReview");
+
+              imgInp.onchange = (evt) => {
+                const [file] = imgInp.files;
+                if (file) {
+                  imgReview.src = URL.createObjectURL(file);
+                  imgReview.style.display = "block"; // Thêm dòng này
+                } else {
+                  imgReview.style.display = "none"; // Ẩn ảnh nếu không có file
+                }
+              };
+            </script>
           </div>
           <div
             class="tab-pane fade"
@@ -156,75 +358,162 @@
           </div>
           <div
             class="tab-pane fade"
-            id="address-tab"
+            id="add-category-tab"
             role="tabpanel"
-            aria-labelledby="address-nav"
+            aria-labelledby="add-category-nav"
           >
-            <h4>Address</h4>
-            <div class="row">
-              <div class="col-md-6">
-                <h5>Payment Address</h5>
-                <p>123 Payment Street, Los Angeles, CA</p>
-                <p>Mobile: 012-345-6789</p>
-                <button>Edit Address</button>
-              </div>
-              <div class="col-md-6">
-                <h5>Shipping Address</h5>
-                <p>123 Shipping Street, Los Angeles, CA</p>
-                <p>Mobile: 012-345-6789</p>
-                <button>Edit Address</button>
-              </div>
-            </div>
+            <form action="/category/create" method="post">
+              <label for="category-name-input">Name: </label>
+              <input type="text" placeholder="Enter category's name" id="category-name-input" name="Name">
+              <button>Add</button>
+            </form>
+          
           </div>
           <div
             class="tab-pane fade"
-            id="account-tab"
+            id="manage-category-tab"
             role="tabpanel"
-            aria-labelledby="account-nav"
+            aria-labelledby="manage-category-nav"
           >
-            <h4>Account Details</h4>
-            <div class="row">
-              <div class="col-md-6">
-                <input type="text" placeholder="First Name" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Last Name" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Mobile" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Email" />
-              </div>
-              <div class="col-md-12">
-                <input type="text" placeholder="Address" />
-              </div>
-              <div class="col-md-12">
-                <button>Update Account</button>
-                <br /><br />
-              </div>
-            </div>
-            <h4>Password change</h4>
-            <div class="row">
-              <div class="col-md-12">
-                <input type="password" placeholder="Current Password" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="New Password" />
-              </div>
-              <div class="col-md-6">
-                <input type="text" placeholder="Confirm Password" />
-              </div>
-              <div class="col-md-12">
-                <button>Save Changes</button>
-              </div>
-            </div>
+          <form
+          id="categoryForm"
+          action="/category/update"
+          method="POST"
+          onsubmit="submitCategoryForm()"
+        >
+          <table class="table table-striped-columns">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+              </tr>
+            </thead>
+            <tbody id="category-tbody">
+              <% categories.forEach((cat, index) => { %>
+                <tr style="text-decoration: none" hasCategoryChange="false">
+                  <td scope="row"><%= cat.id %></td>
+                  <td>
+                    <input
+                      type="text"
+                      class="category"
+                      data-property="category-name"
+                      value="<%= cat.Name %>"
+                      oninput="setCategoryChange(this)"
+                    />
+                  </td>
+              <% }); %>
+            </tbody>
+          </table>
+          <button class="mt-4">Save</button>
+        </form>
+        <script src="/js/admin/manage-category.js"></script>
+          </div>
+          <div
+            class="tab-pane fade"
+            id="manage-products-tab"
+            role="tabpanel"
+            aria-labelledby="manage-products-nav"
+          >
+            <form
+              id="productForm"
+              action="/product/update"
+              method="POST"
+              onsubmit="submitProductForm()"
+            >
+              <table class="table table-striped-columns">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Short description</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Full description</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Delete</th>
+                    <th scope="col">Update thumbnail</th>
+                  </tr>
+                </thead>
+                <tbody id="product-tbody">
+                  <% products.forEach((product, index) => { %>
+                    <tr style="text-decoration: none" hasProductChange="false">
+                      <td scope="row"><%= product.product_id %></td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="product-name"
+                          value="<%= product.Name %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          class="productInput"
+                          data-property="product-price"
+                          value="<%= product.Price %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="short-description"
+                          value="<%= product.Short_Description %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="number"
+                          class="productInput"
+                          data-property="quantity"
+                          value="<%= product.Quantity %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <input
+                          type="text"
+                          class="productInput"
+                          data-property="full-description"
+                          value="<%= product.Full_Description %>"
+                          oninput="setProductChange(this)"
+                        />
+                      </td>
+                      <td>
+                        <select onchange="setProductChange(this)" class="productInput" data-property="category" class="border-0">
+                          <% for (let [index, category] of categories.entries()) { %>
+                              <option <%= product.Category_id == category.id ? 'selected' : '' %> value="<%= category.id %>"><%= category.Name %></option>
+                          <% } %>
+                        </select>
+                      </td>
+                      <td>
+                        <a
+                          href="/product/delete/<%= product.product_id %>"
+                          class="fa fa-trash"
+                        ></a>
+                      </td>
+                      <td>
+                        <a
+                          href="/update-thumbnail-form/<%= product.product_id %>"
+                          class="fa fa-image"
+                        ></a>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+              </table>
+              <button class="mt-4">Save</button>
+            </form>
+            <script src="/js/admin/manage-product.js"></script>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- My Account End -->
 
 <%- include('../partials/footer.ejs') %>

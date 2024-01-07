@@ -6,8 +6,7 @@
 <div class="breadcrumb-wrap">
     <div class="container">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">User</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
             <li class="breadcrumb-item active">Login</li>
         </ul>
     </div>
@@ -26,6 +25,13 @@
         </div>
 
         <div class="w-100">
+            <div class="text-center mb-3">
+                <p>Sign in with:</p>
+                <a href="/auth/google" type="button" class="btn btn-link btn-floating mx-1 border">
+                    <i class="fa fa-google"></i>
+                </a>
+            </div>
+            <p class="text-center">or:</p>
             <form method="POST" action="/login" class="login-form">
                 <div class="d-flex flex-column align-items-center justify-content-center">
                     <div class="d-flex flex-column align-items-center justify-content-center w-100">
@@ -43,14 +49,7 @@
                                 Remember me
                             </label>
                         </div>
-                        <!-- <div class="col-md-12">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="newaccount">
-                                <label class="custom-control-label" for="newaccount">Keep me signed in</label>
-                            </div>
-                        </div> -->
                         <span class="w-50" style="font-size: 13px;">Don't have an account? <a href="/register">Sign up</a></span>
-                        
                         <% for (let error in errors) { %>
                             <span class="w-50 text-danger" style="font-size: 13px;"><%= errors[error] %></span>
                         <% } %>
@@ -65,5 +64,29 @@
     </div>
 </div>
 <!-- Login End -->
+
+
+<script>
+    window.history.pushState({}, '', '/login');
+
+
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+</script>
 
 <%- include('../partials/footer.ejs') %>

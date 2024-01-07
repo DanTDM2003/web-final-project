@@ -1,22 +1,33 @@
-const categoryM = require('../../models/Categories.js')
-const Cookie = require('../../utilities/Cookies.js');
-const JWTAction = require('../../utilities/JWTAction.js');
+const Categories = require('../../models/Categories.js')
 
 module.exports = {
-  getAllCategories: async (req, res, next) => {
-    try{
-      const user = Cookie.decodeCookie(req.signedCookies.user);
-      const categories = await categoryM.getAllCategories();
-      console.log(categories)
+  index: async (req, res, next) => {
+    try {
+      const categories = await Categories.fetch();
       res.render('product/index', {
         title: 'Home',
-        login: req.user,
+        login: req.isAuthenticated(),
+        user: req.user,
         url: req.path.Cookie,
         categories: categories
       })
     }
-    catch (error){
+    catch (error) {
       next(error)
     }
+  },
+  update: async (req, res) => {
+    const changedListCategories = JSON.parse(req.body.changedCategories);
+    console.log("changeList", changedListCategories);
+    await Categories.updateListCategories(changedListCategories);
+    res.redirect("back");
+  },
+  store: async (req, res) => {
+    const data = req.body;
+    const category = {
+      Name: data.Name,
+    }
+    await Categories.add(category);
+    res.redirect("back");
   }
 }

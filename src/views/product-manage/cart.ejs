@@ -1,3 +1,7 @@
+<%- include('../partials/head.ejs') %>
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/nav.ejs') %>
+
 <!-- Breadcrumb Start -->
 <div class="breadcrumb-wrap">
     <div class="container">
@@ -9,7 +13,7 @@
     </div>
 </div>
 <!-- Breadcrumb End -->
-
+<% let totalPrice = 0; %>
 
 <!-- Cart Start -->
 <div class="cart-page">
@@ -29,48 +33,27 @@
                             </tr>
                         </thead>
                         <tbody class="align-middle">
-                            <tr>
-                                <td><a href="#"><img src="img/product-1.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td><button><i class="fa fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td><a href="#"><img src="img/product-2.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td><button><i class="fa fa-trash"></i></button></td>
-                            </tr>
-                            <tr>
-                                <td><a href="#"><img src="img/product-3.png" alt="Image"></a></td>
-                                <td><a href="#">Product Name</a></td>
-                                <td>$22</td>
-                                <td>
-                                    <div class="qty">
-                                        <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                        <input type="text" value="1">
-                                        <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                    </div>
-                                </td>
-                                <td>$22</td>
-                                <td><button><i class="fa fa-trash"></i></button></td>
-                            </tr>
+                            <% for (let item of cart) { %>
+                                <% totalPrice += +item.product.Price * +item.quantity %>
+                                <tr>
+                                    <td><a href="#"><img src="/img/thumbnails/<%= item.product.Thumbnail %>" alt="Image"></a></td>
+                                    <td><a href="#"><%= item.product.product_name %></a></td>
+                                    <td><%= item.product.Price %></td>
+                                    <td>
+                                        <div class="qty">
+                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                            <input class="quantity" type="text" value="<%= item.quantity %>">
+                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                        </div>
+                                    </td>
+                                    <td><%= +item.product.Price * +item.quantity %></td>
+                                    <td>
+                                        <form action="/cart/delete/<%= item.product.product_id %>" method="POST">
+                                            <button><i class="fa fa-trash"></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -87,12 +70,10 @@
                 <div class="cart-summary">
                     <div class="cart-content">
                         <h3>Cart Summary</h3>
-                        <p>Sub Total<span>$22</span></p>
-                        <p>Shipping Cost<span>$1</span></p>
-                        <h4>Grand Total<span>$23</span></h4>
+                        <h4>Grand Total<span><%= totalPrice %></span></h4>
                     </div>
                     <div class="cart-btn">
-                        <button>Update Cart</button>
+                        <button id="update-btn">Update Cart</button>
                         <button>Checkout</button>
                     </div>
                 </div>
@@ -101,3 +82,33 @@
     </div>
 </div>
 <!-- Cart End -->
+
+<script>
+    $(document).ready(function () {
+        function updateCart(quantities) {
+            $.ajax({
+                url: '/cart/update',
+                data: { quantities: quantities },
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (error) {
+                    location.replace('/login');
+                }
+            });
+        }
+
+        $('#update-btn').click(function() {
+            const inputValues = $('.quantity').map(function() {
+                return $(this).val();
+            }).get();
+              
+            updateCart(inputValues);
+        });
+        
+    });
+</script>
+
+<%- include('../partials/footer.ejs') %>
