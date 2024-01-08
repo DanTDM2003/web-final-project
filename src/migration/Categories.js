@@ -12,12 +12,12 @@ module.exports = async () => {
                     "Name" TEXT
                 );
 
-                INSERT INTO "Categories"
-                VALUES  (1, 'Áo sơ mi'),
-                        (2, 'Áo thun'),
-                        (3, 'Áo khoác'),
-                        (4, 'Quần jeans'),
-                        (5, 'Quần shorts')
+                INSERT INTO "Categories"("Name")
+                VALUES  ('Áo sơ mi'),
+                        ('Áo thun'),
+                        ('Áo khoác'),
+                        ('Quần jeans'),
+                        ('Quần shorts')
                 `;
 
                 return cn.connection.query(createTableQuery)
