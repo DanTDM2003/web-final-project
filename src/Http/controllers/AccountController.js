@@ -5,6 +5,7 @@ const RegisterForm = require('../Forms/RegisterForm.js');
 
 const Users = require('../../models/Users.js');
 const Carts = require('../../models/Carts.js');
+const Wallets = require('../../models/Wallet.js')
 
 module.exports = {
     create: (req, res) => {
@@ -34,6 +35,7 @@ module.exports = {
                 await Users.add({ Fullname, Username, Password: bcrypt.hashSync(Password, 10), Email, Role: "User", Login_by: "Normal" });
                 const newUser = await Users.findOne({ Email });
                 await Carts.add({ User_id: newUser.id, Cart: '[]' });
+                await Wallets.add({User_id: newUser.id, Balance: 1000});
 
                 return req.login({ Fullname, Username, Email, Role: "User" }, (err) => {
                     return res.redirect('/');

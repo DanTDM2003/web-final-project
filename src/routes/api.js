@@ -9,6 +9,8 @@ const SessionController = require('../Http/controllers/SessionController.js');
 const AccountController = require('../Http/controllers/AccountController.js');
 const ProductController = require('../Http/controllers/ProductController.js');
 const CartController = require('../Http/controllers/CartController.js');
+const CategoriesController = require('../Http/controllers/CategoryController.js');
+const WalletController = require('../Http/controllers/WalletController.js')
 
 const AuthMiddleware = require('../middlewares/Auth.js');
 const GuestMiddleware = require('../middlewares/Guest.js');
@@ -19,13 +21,13 @@ const Products = require('../models/Products.js');
 const helpers = require('../utilities/helpers.js');
 
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, appRoot + "/src/public/img/products");
-    },
+        destination: function (req, file, cb) {
+                cb(null, appRoot + "/src/public/img/products");
+        },
 
-    filename: async function (req, file, cb) {
-        cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-    }
+        filename: async function (req, file, cb) {
+                cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+        }
 });
 
 let upload = multer({ storage: storage, fileFilter: helpers.imageFilter });
@@ -44,6 +46,8 @@ router.get('/product/:id', ProductController.show);
 
 router.get('/product/delete/:id', AdminMiddleware, ProductController.destroy);
 router.post('/product/update', AdminMiddleware, ProductController.update);
+router.post('/category/update', AdminMiddleware, CategoriesController.update);
+router.post('/category/create', AdminMiddleware, CategoriesController.store);
 router.post('/product/create', AdminMiddleware, upload.single('Thumbnail'), ProductController.store);
 
 router.post('/users/update', AdminMiddleware, AccountController.update);
@@ -90,7 +94,7 @@ router.post('/cart/add', AuthMiddleware, CartController.store);
 router.post('/cart/update', AuthMiddleware, CartController.update);
 router.post('/cart/delete/:id', AuthMiddleware, CartController.delete);
 
-router.get('/auth/google', passport.authenticate('google', {scope: ['email', 'profile']}));
+router.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 router.get('/auth/google/callback', (req, res, next) => passport.authenticate('google', (err, user, info) => {
         if (err) {
                 return res.render("session/create", {
@@ -99,7 +103,7 @@ router.get('/auth/google/callback', (req, res, next) => passport.authenticate('g
                         login: req.isAuthenticated(),
                         url: req.path,
                         user: req.user
-                    });
+                });
         }
         req.login(user, (err) => {
                 if (err) {
@@ -112,5 +116,7 @@ router.get('/auth/google/callback', (req, res, next) => passport.authenticate('g
                 return res.redirect('/');
         });
 })(req, res, next));
+
+router.post('/checkout', WalletController.update);
 
 module.exports = router;

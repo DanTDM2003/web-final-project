@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const sanitizeHtml = require('sanitize-html');
 const fs = require('fs');
 const https = require('https');
+var cors = require('cors')
+
 
 const app = express();
 const viewEngine = require('./config/viewEngine.js');
@@ -25,6 +27,7 @@ app.use(session({
 app.use(cookieParser(secret));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors())
 
 app.use((req, res, next) => {
     req.path = sanitizeHtml(req.path);
@@ -73,5 +76,5 @@ const server = https.createServer(
 )
 
 server.listen(port, host, () => {
-    console.log(`Server has started on http://127.0.0.1:${port}.`);
+    console.log(`Server has started on https://localhost:${port}.`);
 });

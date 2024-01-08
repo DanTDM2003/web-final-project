@@ -70,12 +70,13 @@
                 <div class="cart-summary">
                     <div class="cart-content">
                         <h3>Cart Summary</h3>
-                        <h4>Grand Total<span><%= totalPrice %></span></h4>
+                        <h4>Grand Total<span id="total"><%= totalPrice %></span></h4>
                     </div>
                     <div class="cart-btn">
                         <button id="update-btn">Update Cart</button>
-                        <button>Checkout</button>
+                        <button id="checkout-btn">Checkout</button>
                     </div>
+                    <span id="error" class="w-50 text-danger" style="font-size: 13px;"></span>
                 </div>
             </div>
         </div>
@@ -106,6 +107,28 @@
             }).get();
               
             updateCart(inputValues);
+        });
+
+        var getID = '<%= user.id %>'
+        function checkout(total) {
+            $.ajax({
+                url: 'https://localhost:8001/checkout',
+                data: {total: total, id: getID},
+                type: 'POST',
+                dataType: 'json',
+                success: function (response) {
+                    $('#error').html(response.error)
+                    console.log(response.error)
+                },
+                error: function (error) {
+                    location.replace('/');
+                }
+            });
+        }
+
+        $('#checkout-btn').click(function() {
+            const total = $('#total').html();
+            checkout(+total);
         });
         
     });

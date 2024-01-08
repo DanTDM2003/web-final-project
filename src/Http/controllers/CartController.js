@@ -39,7 +39,7 @@ module.exports = {
 
         res.json({});
     },
-    
+
     update: async (req, res) => {
         let currentCart = await Carts.fetchWithUserId(req.user.id);
 

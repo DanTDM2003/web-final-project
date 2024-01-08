@@ -5,14 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/index.js"
+    "start": "concurrently \"node src/index.js\" \"node src/paymentServer.js\""
   },
   "author": "Nguyen Hung",
   "license": "ISC",
   "dependencies": {
     "app-root-path": "^3.1.0",
     "bcrypt": "^5.1.1",
+    "concurrently": "^8.2.2",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
@@ -26,7 +28,8 @@
     "passport-strategy": "^1.0.0",
     "pg-promise": "^11.5.4",
     "sanitize-html": "^2.11.0",
-    "sharp": "^0.33.1"
+    "sharp": "^0.33.1",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
