@@ -52,4 +52,14 @@ module.exports = class Cart {
             throw error;
         }
     }
+
+    static async resetCart(id){
+        let con = null;
+        try{
+            con = await cn.connection.connect();
+            await con.any(`UPDATE "${tbName}" SET "Cart" = '[]' WHERE "User_id" = $1`, [id])
+        } catch (error){
+            throw error
+        }
+    }
 }

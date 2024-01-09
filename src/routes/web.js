@@ -3,6 +3,7 @@ const router = express.Router();
 
 const ProductController = require('../Http/controllers/ProductController.js');
 const CartController = require('../Http/controllers/CartController.js');
+const PaymentController = require('../Http/controllers/PaymentController.js')
 
 const AuthMiddleware = require('../middlewares/Auth.js');
 
@@ -27,5 +28,7 @@ router.get('/contact', (req, res) => {
 });
 
 router.get('/cart', AuthMiddleware, CartController.index);
+
+router.get('/checkout', PaymentController.index)
 
 module.exports = router;

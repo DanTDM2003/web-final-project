@@ -3,6 +3,7 @@ const ProductsMigration = require('../migration/Products.js');
 const CategoriesMigration = require('../migration/Categories.js');
 const CartsMigration = require('../migration/Carts.js');
 const WalletMigration = require('../migration/Wallet.js')
+const PaymentMigration = require('../migration/Payment.js')
 
 const errors = {
     404: "Sorry. Page not found.",
@@ -26,6 +27,7 @@ module.exports = {
         await ProductsMigration();
         await CartsMigration();
         await WalletMigration();
+        await PaymentMigration();
     },
 
     imageFilter: (req, file, cb) => {
