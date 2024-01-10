@@ -14,6 +14,8 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 const secret = process.env.COOKIE_SECRET_KEY;
 
+
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())
@@ -25,10 +27,6 @@ app.use((req, res, next) => {
     error.status = 404;
 
     next(error);
-});
-
-app.use((err, req, res, next) => {
-    helpers.abort(req, res, err.status);
 });
 
 const server = https.createServer(
