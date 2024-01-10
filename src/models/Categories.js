@@ -10,7 +10,7 @@ module.exports = class Category {
     let con = null;
     try {
       con = await db.connection.connect();
-      const categories = await con.any(`SELECT * FROM "${tbName}"`);
+      const categories = await con.any(`SELECT * FROM "${tbName}" ORDER BY "id" ASC`);
       return categories;
     }
     catch (error) {

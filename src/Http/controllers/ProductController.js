@@ -17,7 +17,7 @@ module.exports = {
     try {
       const products = await Products.fetchAll(conditions);
       const categories = await Categories.fetchAll();
-      
+
       res.render('product/index', {
         title: 'Products',
         login: req.isAuthenticated(),
@@ -33,12 +33,12 @@ module.exports = {
       next(error)
     }
   },
-  
+
   show: async (req, res, next) => {
     try {
       const product = await Products.fetch(req.params.id);
       const products = await Products.fetchRelatedProducts(req.params.id);
-      const categories = await Categories.fetchAll(); 
+      const categories = await Categories.fetchAll();
 
       res.render('product/show', {
         title: 'Product',
@@ -49,7 +49,7 @@ module.exports = {
         categories: categories,
         products: products
       });
-    } catch (error){
+    } catch (error) {
       next(error)
     }
   },

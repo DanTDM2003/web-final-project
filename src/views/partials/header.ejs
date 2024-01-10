@@ -1,33 +1,43 @@
 <div class="top-header">
-    <div class="container">
-        <div class="row align-items-center justify-content-between">
-            <div class="col-md-3">
-                <div class="logo">
-                    <a href="/">
-                        <img style="max-height: 50px;" src="/img/logo.png" alt="Logo">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="user">
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><%= login ? user.Username : 'Guest' %></a>
-                        <% if (!login) { %>
-                            <div class="dropdown-menu rounded-2">
-                                <a href="/login" class="dropdown-item <%= url === '/login' ? 'active' : '' %>">Login</a>
-                                <a href="/register" class="dropdown-item <%= url === '/register' ? 'active' : '' %>">Register</a>
-                            </div>
-                        <% } else { %>
-                            <div class="dropdown-menu rounded-2">
-                                <a href="/logout" class="dropdown-item">Logout</a>
-                            </div>
-                        <% } %>
-                    </div>
-                    <div class="cart">
-                        <a href="/cart"><i class="fa fa-cart-plus"></i></a>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row align-items-center justify-content-between">
+      <div class="col-md-3">
+        <div class="logo">
+          <a href="/">
+            <img style="max-height: 50px" src="/img/logo.png" alt="Logo" />
+          </a>
         </div>
+      </div>
+      <div class="col-md-3">
+        <div class="user">
+          <div class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+              ><%= login ? user.Username : 'Guest' %></a
+            >
+            <% if (!login) { %>
+            <div class="dropdown-menu rounded-2">
+              <a
+                href="/login"
+                class="dropdown-item <%= url === '/login' ? 'active' : '' %>"
+                >Login</a
+              >
+              <a
+                href="/register"
+                class="dropdown-item <%= url === '/register' ? 'active' : '' %>"
+                >Register</a
+              >
+            </div>
+            <% } else { %>
+            <div class="dropdown-menu rounded-2">
+              <a href="/logout" class="dropdown-item">Logout</a>
+            </div>
+            <% } %>
+          </div>
+          <div class="cart">
+            <a href="/cart"><i class="fa fa-cart-plus"></i></a>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
