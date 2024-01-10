@@ -17,7 +17,7 @@ module.exports = {
         let date = dateObject.toISOString().replace(/T/, ' ').replace(/\..+/, '')
         await Payment.add({User_id: user_id, Firstname: firstName, Lastname: lastName, Email: email, Phone: phone, Address: address, Content: JSON.stringify(cart), Date: date})
         await Cart.resetCart(req.body.id)
-        res.json({})
+        res.json({success: "Purchase succeed"})
       }
     }
     catch(error){
