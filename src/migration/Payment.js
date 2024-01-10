@@ -16,6 +16,7 @@ module.exports = async () => {
                     "Phone" VARCHAR,
                     "Address" VARCHAR,
                     "Content" JSONB,
+                    "Date" TIMESTAMP,
 
                     FOREIGN KEY ("User_id") REFERENCES "Users"(id) ON DELETE CASCADE
                 );

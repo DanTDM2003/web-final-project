@@ -3,7 +3,7 @@ const Categories = require('../../models/Categories.js')
 module.exports = {
   index: async (req, res, next) => {
     try {
-      const categories = await Categories.fetch();
+      const categories = await Categories.fetchAll();
       res.render('product/index', {
         title: 'Home',
         login: req.isAuthenticated(),

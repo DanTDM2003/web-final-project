@@ -69,6 +69,8 @@
                     </div>
                 </div>
                 <span style="display: none;" id="carts"><%= JSON.stringify(carts) %></span>
+                <span id="success" class="w-200 text-success" style="font-size: 13px;"></span>
+                <span id="error" class="w-200 text-danger" style="font-size: 13px;"></span>
             </div>
         </div>
     </div>
@@ -86,7 +88,12 @@
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
-                    $('#error').html(response.error)
+                    if(response&&response.success){
+                        $('#success').html(response.success)
+                    }
+                    else{
+                        $('#error').html(response.error)
+                    }
                 },
                 error: function (error) {
                     console.log(error)
