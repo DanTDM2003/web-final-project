@@ -90,6 +90,9 @@
               Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
               eros. Aliquam et sapien eget arcu rhoncus scelerisque.
             </p>
+            <div>
+              <canvas id="myChart"></canvas>
+            </div>
           </div>
           <div
             class="tab-pane fade"
@@ -515,5 +518,32 @@
     </div>
   </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const ctx = document.getElementById('myChart');
+  let temp = '<%= statistics %>'
+  const months = temp.split(',').map(Number);
+  console.log( months)
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      datasets: [{
+        label: 'Number of purchases per month',
+        data: months,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
+</script>
+
 
 <%- include('../partials/footer.ejs') %>
