@@ -14,8 +14,6 @@ const port = process.env.PORT;
 const host = process.env.HOST;
 const secret = process.env.COOKIE_SECRET_KEY;
 
-
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors())

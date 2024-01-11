@@ -1,4 +1,5 @@
-const db = require('../config/database');
+const db = require('../db.js');
+const cn = require('../config/database');
 
 const tbName = "Categories";
 module.exports = class Category {
@@ -9,14 +10,12 @@ module.exports = class Category {
   static async fetchAll() {
     let con = null;
     try {
-      con = await db.connection.connect();
+      con = await cn.connection.connect();
       const categories = await con.any(`SELECT * FROM "${tbName}" ORDER BY "id" ASC`);
       return categories;
-    }
-    catch (error) {
+    } catch (error) {
       throw error;
-    }
-    finally {
+    } finally {
       if (con)
         con.done();
     }
@@ -24,7 +23,7 @@ module.exports = class Category {
   static async updateListCategories(categories) {
     let con = null;
     try {
-      con = await db.connection.connect();
+      con = await cn.connection.connect();
 
       // Sử dụng Promise.all để đợi tất cả các truy vấn cập nhật hoàn thành
       await Promise.all(categories.map(async (cat) => {
@@ -46,14 +45,17 @@ module.exports = class Category {
     }
   }
   static async add(obj) {
-    console.log("cat:", obj)
     let con = null;
     try {
-      con = await db.connection.connect()
-      let sql = db.pgp.helpers.insert(obj, null, tbName)
+      con = await cn.connection.connect()
+      let sql = cn.pgp.helpers.insert(obj, null, tbName)
       await con.query(sql);
     } catch (error) {
       throw error;
+    } finally {
+      if (con) {
+        con.done();
+      }
     }
   }
 

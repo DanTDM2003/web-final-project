@@ -60,6 +60,10 @@ module.exports = class Cart {
             await con.any(`UPDATE "${tbName}" SET "Cart" = '[]' WHERE "User_id" = $1`, [id])
         } catch (error){
             throw error
+        } finally {
+            if (con) {
+                con.done();
+            }
         }
     }
 }

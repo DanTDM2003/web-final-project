@@ -156,13 +156,16 @@
                                             <img src="/img/thumbnails/<%= item.Thumbnail %>" alt="Product Image">
                                         </a>
                                         <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
+                                            <form class="add-cart">
+                                                <input type="hidden" name="product" id="product" value="<%= JSON.stringify(item) %>">
+                                                <input type="hidden" name="quantity" id="quantity" value="1">
+                                                <button><i class="fa fa-cart-plus"></i></button>
+                                            </form>
+                                            <a href="/product/<%= item.id %>"><i class="fa fa-search"></i></a>
                                         </div>
                                     </div>
                                     <div class="product-content">
-                                        <div class="title"><a href="#"><%= item.Name %></a></div>
+                                        <div class="title"><a href="/product/<%= item.id %>"><%= item.Name %></a></div>
                                         <div class="ratting">
                                             <% for(let i = 0; i < item.Rating; i++) { %>
                                                 <i class="fa fa-star"></i>

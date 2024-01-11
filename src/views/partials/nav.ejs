@@ -10,15 +10,6 @@
                 <div class="navbar-nav m-auto">
                     <a href="/" class="nav-item nav-link <%= url === '/' ? 'active' : '' %>">Home</a>
                     <a href="/products" class="nav-item nav-link <%= url === '/products' ? 'active' : '' %>">Products</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu">
-                            <a href="cart.html" class="dropdown-item">Cart</a>
-                            <a href="wishlist.html" class="dropdown-item">Wishlist</a>
-                            <a href="/checkout" class="dropdown-item">Checkout</a>
-                            <a href="my-account.html" class="dropdown-item">My Account</a>
-                        </div>
-                    </div>
                     <a href="/contact" class="nav-item nav-link <%= url === '/contact' ? 'active' : '' %>">Contact Us</a>
                     <% if (user && user.Role === "Admin") { %>
                         <a href="/dashboard" class="nav-item nav-link <%= url === '/dashboard' ? 'active' : '' %>">Dashboard</a>

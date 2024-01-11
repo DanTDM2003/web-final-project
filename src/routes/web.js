@@ -7,12 +7,18 @@ const PaymentController = require('../Http/controllers/PaymentController.js')
 
 const AuthMiddleware = require('../middlewares/Auth.js');
 
-router.get('/', (req, res) => {
+const Products = require('../models/Products.js');
+
+router.get('/', async (req, res) => {
+    const newestProducts = await Products.fetchAllNewest();
+    const expensiveProducts = await Products.fetchAllPriceDown();
     res.render('index', {
         title: 'Home',
         login: req.isAuthenticated(),
         user: req.user,
-        url: req.path
+        url: req.path,
+        newestProducts: newestProducts.slice(0, 10),
+        expensiveProducts: expensiveProducts.slice(0, 10)
     });
 });
 
@@ -29,6 +35,6 @@ router.get('/contact', (req, res) => {
 
 router.get('/cart', AuthMiddleware, CartController.index);
 
-router.get('/checkout', PaymentController.index)
+router.get('/checkout', AuthMiddleware, PaymentController.index)
 
 module.exports = router;

@@ -12,12 +12,14 @@ router.get('/dashboard', AdminMiddleware, async (req, res) => {
     const users = await Users.findAll();
     const products = await Products.fetchAll();
     const categories = await Categories.fetchAll();
+    const bills = await Payment.fetchAll();
+    delete bills.Password;
+
     let statistics = [];
     for(let i = 0; i < 12; i++){
         let count = await Payment.count(i+1);
         statistics.push(count)
-    }
-    console.log(statistics)
+    }           
     res.render('admin/index', {
         title: 'Dashboard',
         login: req.isAuthenticated(),
@@ -26,7 +28,8 @@ router.get('/dashboard', AdminMiddleware, async (req, res) => {
         users: users,
         products: products,
         categories: categories,
-        statistics: statistics
+        statistics: statistics,
+        bills: bills
     });
 });
 router.get('/update-thumbnail-form/:proId', AdminMiddleware, async (req, res) => {

@@ -20,46 +20,52 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th>Image</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
-                                <th>Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-middle">
-                            <% for (let item of cart) { %>
-                                <% totalPrice += +item.product.Price * +item.quantity %>
+                <% if (cart.length > 0) { %>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-dark">
                                 <tr>
-                                    <td><a href="#"><img src="/img/thumbnails/<%= item.product.Thumbnail %>" alt="Image"></a></td>
-                                    <td><a href="#"><%= item.product.product_name %></a></td>
-                                    <td><%= item.product.Price %></td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                            <input class="quantity" type="text" value="<%= item.quantity %>">
-                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><%= +item.product.Price * +item.quantity %></td>
-                                    <td>
-                                        <form action="/cart/delete/<%= item.product.product_id %>" method="POST">
-                                            <button><i class="fa fa-trash"></i></button>
-                                        </form>
-                                    </td>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Remove</th>
                                 </tr>
-                            <% } %>
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody class="align-middle">
+                                
+                                    <% for (let item of cart) { %>
+                                        <% totalPrice += +item.product.Price * +item.quantity %>
+                                        <tr>
+                                            <td><a href="#"><img src="/img/thumbnails/<%= item.product.Thumbnail %>" alt="Image"></a></td>
+                                            <td><a href="#"><%= item.product.product_name %></a></td>
+                                            <td><%= item.product.Price %></td>
+                                            <td>
+                                                <div class="qty">
+                                                    <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                                    <input class="quantity" type="text" value="<%= item.quantity %>">
+                                                    <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                                </div>
+                                            </td>
+                                            <td><%= +item.product.Price * +item.quantity %></td>
+                                            <td>
+                                                <form action="/cart/delete/<%= item.product.product_id %>" method="POST">
+                                                    <button><i class="fa fa-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                <% } else { %>
+                    <span class="fs-4 fw-bold text-center">No item in cart.</span>
+                <% } %>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <div class="col-md-6">
                 <div class="coupon">
                     <input type="text" placeholder="Coupon Code">
@@ -73,8 +79,8 @@
                         <h4>Grand Total<span><%= totalPrice %></span></h4>
                     </div>
                     <div class="cart-btn">
-                        <button style="display: inline-block;" id="update-btn">Update Cart</button>
-                        <a href="/checkout"><button style="display: inline-block;" type="submit">Checkout</button></a>
+                        <button id="update-btn">Update Cart</button>
+                        <button id="checkout-btn">Checkout</button>
                     </div>
                     <span id="error" class="w-50 text-danger" style="font-size: 13px;"></span>
                 </div>
@@ -107,7 +113,13 @@
             }).get();
               
             updateCart(inputValues);
-        });  
+        })
+        
+        ;$('#checkout-btn').click(function() {
+            const currentUrl = window.location.href;
+            let newUrl = currentUrl.replace("/cart", "/checkout");
+            window.location.href = newUrl;
+        });
     });
 </script>
 

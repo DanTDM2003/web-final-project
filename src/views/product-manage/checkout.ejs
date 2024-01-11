@@ -5,8 +5,8 @@
 <div class="breadcrumb-wrap">
     <div class="container">
         <ul class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Products</a></li>
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
             <li class="breadcrumb-item active">Checkout</li>
         </ul>
     </div>
@@ -23,11 +23,11 @@
                     <h2>Billing Address</h2>
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="FirstName">First Name</label>
+                            <label for="FirstName">First Name*</label>
                             <input name="FirstName" id="FirstName" class="form-control" type="text" placeholder="First Name...">
                         </div>
                         <div class="col-md-6">
-                            <label for="LastName">Last Name</label>
+                            <label for="LastName">Last Name*</label>
                             <input name="LastName" id="LastName" class="form-control" type="text" placeholder="Last Name...">
                         </div>
                         <div class="col-md-6">
@@ -35,11 +35,11 @@
                             <input name="Email" id="Email" class="form-control" type="text" placeholder="E-mail...">
                         </div>
                         <div class="col-md-6">
-                            <label for="Phone">Phone number</label>
-                            <input name="Phone" id="Phone" class="form-control" type="text" placeholder="Phone number...">
+                            <label for="Phone">Phone number*</label>
+                            <input name="Phone" id="Phone" class="form-control" type="tel" placeholder="Phone number...">
                         </div>
                         <div class="col-md-12">
-                            <label for="Address">Address</label>
+                            <label for="Address">Address*</label>
                             <input name="Address" id="Address" class="form-control" type="text" placeholder="Address...">
                         </div>
                     </div>
@@ -52,13 +52,15 @@
                     <h2>Cart Total</h2>
                     <div class="checkout-content">
                         <h3>Products</h3>
-                        <% let total = 0 %>
-                        <% if(carts.length > 0) { %>
-                            <% for(let cart of carts) { %>
-                                <p><%= cart.product.Name %> &lpar;<%= cart.quantity %>&rpar;<span><%= +cart.product.Price * +cart.quantity %></span></p>
-                                <% total += +cart.product.Price * +cart.quantity %>
+                        <div id="content">
+                            <% let total = 0 %>
+                            <% if(carts.length > 0) { %>
+                                <% for(let cart of carts) { %>
+                                    <p><%= cart.product.Name %> &lpar;<%= cart.quantity %>&rpar;<span><%= +cart.product.Price * +cart.quantity %></span></p>
+                                    <% total += +cart.product.Price * +cart.quantity %>
+                                <% } %>
                             <% } %>
-                        <% } %>
+                        </div>
                         <h4>Grand Total<span><%= total %></span></h4>
                     </div>
                 </div>
@@ -83,15 +85,15 @@
         
         function checkout(total, firstName, lastName, email, phone, address, cart) {
             $.ajax({
-                url: 'https://localhost:8001/checkout',
+                url: '/payment',
                 data: {total: total, id: getID, firstName: firstName, lastName: lastName, email: email, phone: phone, address: address, cart: cart},
                 type: 'POST',
                 dataType: 'json',
                 success: function (response) {
                     if(response&&response.success){
                         $('#success').html(response.success)
-                    }
-                    else{
+                        $('#content').remove();
+                    } else {
                         $('#error').html(response.error)
                     }
                 },

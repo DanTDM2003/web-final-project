@@ -13,11 +13,11 @@ module.exports = async () => {
                 );
 
                 INSERT INTO "Categories"("Name")
-                VALUES  ('Áo sơ mi'),
-                        ('Áo thun'),
-                        ('Áo khoác'),
-                        ('Quần jeans'),
-                        ('Quần shorts')
+                VALUES  ('Shirt'),
+                        ('Skirt'),
+                        ('Jacket'),
+                        ('Jeans'),
+                        ('Shorts')
                 `;
 
                 return cn.connection.query(createTableQuery)

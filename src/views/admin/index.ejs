@@ -54,18 +54,11 @@
             role="tab">Orders</a>
           <a
             class="nav-link"
-            id="payment-nav"
-            data-toggle="pill"
-            href="#payment-tab"
-            role="tab">Payment Method</a>
-          
-            <a
-            class="nav-link"
             id="manage-products-nav"
             data-toggle="pill"
             href="#manage-products-tab"
             role="tab">Manage products</a>
-            <a
+          <a
             class="nav-link"
             id="manage-category-nav"
             data-toggle="pill"
@@ -81,15 +74,7 @@
             role="tabpanel"
             aria-labelledby="dashboard-nav"
           >
-            <h4>Dashboard</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at
-              dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla
-              tristique viverra nisl, sit amet bibendum ante suscipit non.
-              Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
-              eros. Aliquam et sapien eget arcu rhoncus scelerisque.
-            </p>
+            <h4>Statistics</h4>
             <div>
               <canvas id="myChart"></canvas>
             </div>
@@ -307,57 +292,30 @@
                 <thead class="thead-dark">
                   <tr>
                     <th>No</th>
-                    <th>Product</th>
+                    <th>Bill ID</th>
+                    <th>Email</th>
                     <th>Date</th>
-                    <th>Price</th>
-                    <th>Status</th>
                     <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>01 Jan 2020</td>
-                    <td>$22</td>
-                    <td>Approved</td>
-                    <td><button>View</button></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>01 Jan 2020</td>
-                    <td>$22</td>
-                    <td>Approved</td>
-                    <td><button>View</button></td>
-                  </tr>
-                  <tr>
-                    <td>1</td>
-                    <td>Product Name</td>
-                    <td>01 Jan 2020</td>
-                    <td>$22</td>
-                    <td>Approved</td>
-                    <td><button>View</button></td>
-                  </tr>
+                  <% bills.forEach((item, index) => { %>
+                    <tr>
+                      <td><%= index + 1 %></td>
+                      <td><%= item.payment_id %></td>
+                      <td><%= item.Email %></td>
+                      <td><%= item.Date %></td>
+                      <td>
+                        <form action="/payment/delete" method="POST">
+                          <input type="hidden" name="id" value="<%= item.payment_id %>">
+                          <button>Delete</button>
+                        </form>
+                      </td>
+                    </tr>
+                  <% }); %>
                 </tbody>
               </table>
             </div>
-          </div>
-          <div
-            class="tab-pane fade"
-            id="payment-tab"
-            role="tabpanel"
-            aria-labelledby="payment-nav"
-          >
-            <h4>Payment Method</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. In
-              condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at
-              dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla
-              tristique viverra nisl, sit amet bibendum ante suscipit non.
-              Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam
-              eros. Aliquam et sapien eget arcu rhoncus scelerisque.
-            </p>
           </div>
           <div
             class="tab-pane fade"

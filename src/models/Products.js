@@ -39,20 +39,6 @@ module.exports = class Product {
     }
   }
   
-  static async fetchAllPopular(conditions = [``, ``]) {
-    let con = null;
-    try {
-      con = await db.connection.connect();
-      const products = await con.any(`SELECT "${tbName}".id AS product_id, "${tbName}"."Name" AS product_name, * FROM ("${tbName}" JOIN "Categories" ON "${tbName}"."Category_id" = "Categories".id) WHERE ("${tbName}"."Name" ILIKE '%' || $1 || '%') AND ("Categories"."Name" ILIKE '%' || $2 || '%') ORDER BY "${tbName}"."Rating" DESC`, conditions);
-      return products;
-    } catch (error) {
-      throw error;
-    } finally {
-      if (con)
-        con.done();
-    }
-  }
-  
   static async fetchAllPriceUp(conditions = [``, ``]) {
     let con = null;
     try {
@@ -106,11 +92,11 @@ module.exports = class Product {
     }
   }
 
-  static async fetchRelatedProducts(id) {
+  static async fetchRelatedProducts() {
     let con = null;
     try {
       con = await db.connection.connect();
-      const products = await con.any(`SELECT p1.* FROM "${tbName}" AS p1, "${tbName}" AS p2 WHERE p2.id = $1 AND p1.id != p2.id AND p1."Category_id" = p2."Category_id" LIMIT 5`, [id]);
+      const products = await con.any(`SELECT p1.* FROM "${tbName}" AS p1, "${tbName}" AS p2 WHERE p2.id = $1 AND p1.id != p2.id AND p1."Category_id" = p2."Category_id" LIMIT 5`);
       return products;
     } catch (error) {
       throw error;
@@ -143,6 +129,10 @@ module.exports = class Product {
       return;
     } catch (error) {
       throw error;
+    } finally {
+      if (con) {
+        con.done();
+      }
     }
   }
 
@@ -175,6 +165,10 @@ module.exports = class Product {
       });
     } catch (error) {
       throw error;
+    } finally {
+      if (con) {
+        con.done();
+      }
     }
   }
 }

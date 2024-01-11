@@ -1,10 +1,10 @@
 <!-- Footer Start -->
     <div class="footer">
         <div class="container-fluid">
-            <div class="row">
+            <div class="row d-flex justify-content-between">
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <h1>E Shop</h1>
+                        <h1>PHLH Boutique</h1>
                         <p>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sollicitudin rutrum massa. Suspendisse sollicitudin rutrum massa. Vestibulum porttitor, metus sed pretium elementum, nisi nibh sodales quam, non lobortis neque felis id mauris.
                         </p>
@@ -13,28 +13,13 @@
 
                 <div class="col-lg-3 col-md-6">
                     <div class="footer-widget">
-                        <h3 class="title">Useful Pages</h3>
-                        <ul>
-                            <li><a href="product.html">Product</a></li>
-                            <li><a href="product-detail.html">Product Detail</a></li>
-                            <li><a href="cart.html">Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="login.html">Login & Register</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-widget">
                         <h3 class="title">Quick Links</h3>
                         <ul>
-                            <li><a href="product.html">Product</a></li>
-                            <li><a href="cart.html">Cart</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="login.html">Login & Register</a></li>
-                            <li><a href="my-account.html">My Account</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
+                            <li><a href="/products">Products</a></li>
+                            <li><a href="/cart">Cart</a></li>
+                            <li><a href="/checkout">Checkout</a></li>
+                            <li><a href="/login">Login</a></li>
+                            <li><a href="/register">Register</a></li>
                         </ul>
                     </div>
                 </div>
@@ -43,9 +28,9 @@
                     <div class="footer-widget">
                         <h3 class="title">Get in Touch</h3>
                         <div class="contact-info">
-                            <p><i class="fa fa-map-marker"></i>123 E Shop, Los Angeles, CA, USA</p>
-                            <p><i class="fa fa-envelope"></i>email@example.com</p>
-                            <p><i class="fa fa-phone"></i>+123-456-7890</p>
+                            <p><i class="fa fa-map-marker"></i>227 Đ. Nguyễn Văn Cừ, Phường 4, Quận 5, Thành phố Hồ Chí Minh</p>
+                            <p><i class="fa fa-envelope"></i>doannguyenhung2003@gmail.com</p>
+                            <p><i class="fa fa-phone"></i>+84 901306830</p>
                             <div class="social">
                                 <a href=""><i class="fa fa-twitter"></i></a>
                                 <a href=""><i class="fa fa-facebook"></i></a>
@@ -61,13 +46,13 @@
             <div class="row payment">
                 <div class="col-md-6">
                     <div class="payment-method">
-                        <p>We Accept:</p>
+                        <p class="fs-5">We Accept:</p>
                         <img src="/img/payment-method.png" alt="Payment Method" />
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="payment-security">
-                        <p>Secured By:</p>
+                        <p class="fs-5">Secured By:</p>
                         <img src="/img/godaddy.svg" alt="Payment Security" />
                         <img src="/img/norton.svg" alt="Payment Security" />
                         <img src="/img/ssl.svg" alt="Payment Security" />
@@ -91,5 +76,29 @@
     
     <!-- Template Javascript -->
     <script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            function addToCart(product, quantity) {
+                $.ajax({
+                    url: '/cart/add',
+                    type: 'POST',
+                    data: { product: product, quantity: quantity },
+                    dataType: 'json',
+                    success: function (response) {
+                        console.log(response);
+                    },
+                    error: function (error) {
+                        location.replace('/login');
+                    }
+                });
+            }
+
+            $('.add-cart').submit(function (e) {
+                e.preventDefault();
+                addToCart($(this).find('#product').val(), $(this).find('#quantity').val());
+            });
+        });
+    </script>
 </body>
 </html>

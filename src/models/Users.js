@@ -86,9 +86,12 @@ module.exports = class User {
                     user.id
                 ]);
             });
-        }
-        catch (error) {
+        } catch (error) {
             throw error;
+        } finally {
+            if (con) {
+                con.done();
+            }
         }
     }
 
@@ -97,9 +100,12 @@ module.exports = class User {
         try {
             con = await cn.connection.connect();
             await con.none(`DELETE FROM "${tbName}" WHERE id = $1`, id);
-        }
-        catch (error) {
+        } catch (error) {
             throw error;
+        } finally {
+            if (con) {
+                con.done();
+            }
         }
     }
 }

@@ -1,9 +1,12 @@
+require('dotenv').config();
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const appRoot = require('app-root-path');
 const path = require('path');
 const passport = require('passport');
+const axios = require('axios');
+const https = require('https');
 
 const SessionController = require('../Http/controllers/SessionController.js');
 const AccountController = require('../Http/controllers/AccountController.js');
@@ -11,6 +14,7 @@ const ProductController = require('../Http/controllers/ProductController.js');
 const CartController = require('../Http/controllers/CartController.js');
 const CategoriesController = require('../Http/controllers/CategoryController.js');
 const WalletController = require('../Http/controllers/WalletController.js')
+const PaymentController = require('../Http/controllers/PaymentController.js')
 
 const AuthMiddleware = require('../middlewares/Auth.js');
 const GuestMiddleware = require('../middlewares/Guest.js');
@@ -18,7 +22,12 @@ const AdminMiddleware = require('../middlewares/Admin.js');
 
 const Products = require('../models/Products.js');
 
+const JWTAction = require('../utilities/JWTAction.js');
 const helpers = require('../utilities/helpers.js');
+
+const httpsAgent = new https.Agent({
+        rejectUnauthorized: false
+});
 
 const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -31,6 +40,9 @@ const storage = multer.diskStorage({
 });
 
 let upload = multer({ storage: storage, fileFilter: helpers.imageFilter });
+
+const issuer = process.env.ISSUER;
+const audience = process.env.AUDIENCE;
 
 router.route('/login')
         .get(GuestMiddleware, SessionController.create)
@@ -68,8 +80,6 @@ router.get('/products/pagination', async (req, res) => {
                 products = await Products.fetchAllPriceUp(conditions);
         } else if (req.query.sort == "price-down") {
                 products = await Products.fetchAllPriceDown(conditions);
-        } else if (req.query.sort == "popular") {
-                products = await Products.fetchAllPriceUp(conditions);
         } else if (req.query.sort == "newest") {
                 products = await Products.fetchAllNewest(conditions);
         } else {
@@ -94,8 +104,8 @@ router.post('/cart/add', AuthMiddleware, CartController.store);
 router.post('/cart/update', AuthMiddleware, CartController.update);
 router.post('/cart/delete/:id', AuthMiddleware, CartController.delete);
 
-router.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
-router.get('/auth/google/callback', (req, res, next) => passport.authenticate('google', (err, user, info) => {
+router.get('/auth/google', GuestMiddleware, passport.authenticate('google', { scope: ['email', 'profile'] }));
+router.get('/auth/google/callback', GuestMiddleware, (req, res, next) => passport.authenticate('google', (err, user, info) => {
         if (err) {
                 return res.render("session/create", {
                         title: 'Login',
@@ -117,6 +127,24 @@ router.get('/auth/google/callback', (req, res, next) => passport.authenticate('g
         });
 })(req, res, next));
 
-router.post('/checkout', WalletController.update);
+router.post('/checkout', require('../middlewares/verifyToken.js'), WalletController.update);
+router.post('/payment', AuthMiddleware, async (req, res, next) => {
+        try {
+                const token = JWTAction.createJWT({ iss: issuer, aud: audience });
+                const response = await axios.post(
+                        "https://localhost:8001/checkout",
+                        req.body,
+                        {
+                                headers: { Authorization: `Bearer ${token}` },
+                                httpsAgent
+                        }
+                );
+                res.json(response.data);
+        } catch (error) {
+                next(error);
+        }
+});
+
+router.post('/payment/delete', AdminMiddleware, PaymentController.destroy);
 
 module.exports = router;
