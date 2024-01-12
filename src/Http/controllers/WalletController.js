@@ -30,5 +30,15 @@ module.exports = {
     } catch(error){
       next(error)
     }
+  },
+  
+  store: async (req, res, next) => {
+    console.log(1);
+    try {
+      await Wallet.add(req.body);
+      res.json({ success: "Successfully create a digital wallet." });
+    } catch(error){
+      next(error)
+    }
   }
 }

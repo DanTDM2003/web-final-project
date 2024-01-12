@@ -92,11 +92,11 @@ module.exports = class Product {
     }
   }
 
-  static async fetchRelatedProducts() {
+  static async fetchRelatedProducts(id) {
     let con = null;
     try {
       con = await db.connection.connect();
-      const products = await con.any(`SELECT p1.* FROM "${tbName}" AS p1, "${tbName}" AS p2 WHERE p2.id = $1 AND p1.id != p2.id AND p1."Category_id" = p2."Category_id" LIMIT 5`);
+      const products = await con.any(`SELECT p1.* FROM "${tbName}" AS p1, "${tbName}" AS p2 WHERE p2.id = $1 AND p1.id != p2.id AND p1."Category_id" = p2."Category_id" LIMIT 5`, [id]);
       return products;
     } catch (error) {
       throw error;

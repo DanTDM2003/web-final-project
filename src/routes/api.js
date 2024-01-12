@@ -24,10 +24,7 @@ const Products = require('../models/Products.js');
 
 const JWTAction = require('../utilities/JWTAction.js');
 const helpers = require('../utilities/helpers.js');
-
-const httpsAgent = new https.Agent({
-        rejectUnauthorized: false
-});
+const Cookies = require('../utilities/Cookies.js');
 
 const storage = multer.diskStorage({
         destination: function (req, file, cb) {
@@ -41,8 +38,9 @@ const storage = multer.diskStorage({
 
 let upload = multer({ storage: storage, fileFilter: helpers.imageFilter });
 
-const issuer = process.env.ISSUER;
-const audience = process.env.AUDIENCE;
+const httpsAgent = new https.Agent({
+        rejectUnauthorized: false
+});
 
 router.route('/login')
         .get(GuestMiddleware, SessionController.create)
@@ -130,7 +128,7 @@ router.get('/auth/google/callback', GuestMiddleware, (req, res, next) => passpor
 router.post('/checkout', require('../middlewares/verifyToken.js'), WalletController.update);
 router.post('/payment', AuthMiddleware, async (req, res, next) => {
         try {
-                const token = JWTAction.createJWT({ iss: issuer, aud: audience });
+                const token = JWTAction.serverToken();
                 const response = await axios.post(
                         "https://localhost:8001/checkout",
                         req.body,
@@ -146,5 +144,6 @@ router.post('/payment', AuthMiddleware, async (req, res, next) => {
 });
 
 router.post('/payment/delete', AdminMiddleware, PaymentController.destroy);
+router.post('/wallet/create', require('../middlewares/verifyToken.js'), WalletController.store);
 
 module.exports = router;

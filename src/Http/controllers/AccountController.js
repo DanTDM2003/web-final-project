@@ -1,11 +1,18 @@
 const bcrypt = require('bcrypt');
 const he = require('he');
+const axios = require('axios');
+const https = require('https');
 
 const RegisterForm = require('../Forms/RegisterForm.js');
 
 const Users = require('../../models/Users.js');
-const Carts = require('../../models/Carts.js');
-const Wallets = require('../../models/Wallet.js')
+const Carts = require('../../models/Carts.js')
+
+const JWTAction = require('../../utilities/JWTAction.js');
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 module.exports = {
     create: (req, res) => {
@@ -34,8 +41,16 @@ module.exports = {
             if (!user) {
                 await Users.add({ Fullname, Username, Password: bcrypt.hashSync(Password, 10), Email, Role: "User", Login_by: "Normal" });
                 const newUser = await Users.findOne({ Email });
+                const token = JWTAction.serverToken();
+                await axios.post(
+                        "https://localhost:8001/wallet/create",
+                        { User_id: newUser.id, Balance: 1000 },
+                        {
+                                headers: { Authorization: `Bearer ${token}` },
+                                httpsAgent
+                        }
+                );
                 await Carts.add({ User_id: newUser.id, Cart: '[]' });
-                await Wallets.add({User_id: newUser.id, Balance: 1000});
 
                 return req.login({ Fullname, Username, Email, Role: "User" }, (err) => {
                     return res.redirect('/');

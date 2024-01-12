@@ -14,7 +14,6 @@
 </div>
 <!-- Breadcrumb End -->
 
-
 <!-- Product List Start -->
 <div class="product-view">
     <div class="container">
@@ -48,7 +47,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" id="product-list"></div>
+                    
+                    <div id="loading-circle"></div>
+                    <div class="row" id="product-list">
+                    </div>
                 </div>
                 
                 <div class="col-lg-12">
@@ -91,12 +93,19 @@
         let searchParams = new URLSearchParams(url.search);
         search = searchParams.get('search');
         category = searchParams.get('category');
+        
 
         function loadPage(page) {
             $.ajax({
                 url: '/products/pagination',
                 data: { page: page, search: search, category: category, sort: sort },
                 dataType: 'json',
+                beforeSend: () => {
+                    $("#loading-circle").show();
+                },
+                complete: () => {
+                    $("#loading-circle").hide();
+                },
                 success: function (response) {
                     let list = '';
                     for (let product of response.products) {

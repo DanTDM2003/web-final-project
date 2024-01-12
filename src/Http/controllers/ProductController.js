@@ -35,6 +35,7 @@ module.exports = {
   },
 
   show: async (req, res, next) => {
+
     try {
       const product = await Products.fetch(req.params.id);
       const products = await Products.fetchRelatedProducts(req.params.id);
