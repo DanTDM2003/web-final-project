@@ -61,7 +61,7 @@
                                 <% } %>
                             <% } %>
                         </div>
-                        <h4>Grand Total<span><%= total %></span></h4>
+                        <h4>Grand Total<span id="money"><%= total %></span></h4>
                     </div>
                 </div>
                 
@@ -94,6 +94,9 @@
                         $('#success').html(response.success);
                         $('#error').remove();
                         $('#content').remove();
+                        $('#money').html('0');
+                        $('#carts').remove();
+                        location.replace('/products');
                     } else {
                         $('#error').html(response.error);
                         $('#success').remove();
@@ -112,7 +115,12 @@
             let phone = $('#Phone').val();
             let address = $('#Address').val();
             let cart = JSON.parse($('#carts').html())
-            checkout(+total, firstName, lastName, email, phone, address, cart);
+            if (cart != '') {
+                checkout(+total, firstName, lastName, email, phone, address, cart);
+            } else {
+                $('#success').remove();
+                $('#error').html("There is nothing in your cart.");
+            }
         });
         
     });

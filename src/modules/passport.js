@@ -1,11 +1,19 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const axios = require('axios');
+const https = require('https');
 
 const LoginStrategy = require('../utilities/LoginStrategy.js');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 const Users = require('../models/Users.js');
 const Carts = require('../models/Carts.js');
+
+const JWTAction = require('../utilities/JWTAction.js');
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false
+});
 
 passport.serializeUser((user, done) => {
     done(null, user.Email);
@@ -52,6 +60,15 @@ module.exports = (app) => {
                 if (!user) {
                     await Users.add({ Fullname: profile.displayName, Username: profile.displayName, Email: profile.emails[0].value, Role: 'User', Login_by: 'Google' });
                     user = await Users.findOne({ Email: profile.emails[0].value });
+                    const token = JWTAction.serverToken();
+                    await axios.post(
+                        "https://localhost:8001/wallet/create",
+                        { User_id: user.id, Balance: 1000 },
+                        {
+                                headers: { Authorization: `Bearer ${token}` },
+                                httpsAgent
+                        }
+                    );
                     await Carts.add({ User_id: user.id, Cart: '[]' });
                     return done(null, user);
                 } else if (user) {

@@ -22,7 +22,7 @@ module.exports = class Wallet {
     let con = null;
     try {
         con = await cn.connection.connect();
-        const balance = await con.oneOrNone(`SELECT "Balance" FROM "${tbName}" WHERE id = $1`, [id]);
+        const balance = await con.oneOrNone(`SELECT "Balance" FROM "${tbName}" WHERE "User_id" = $1`, [id]);
         return balance;
     } catch (error) {
         throw error;
@@ -38,7 +38,7 @@ module.exports = class Wallet {
     try {
         if (price >= 0) {
             con = await cn.connection.connect();
-            await con.oneOrNone(`UPDATE "${tbName}" SET "Balance" = $1 WHERE id = $2`, [price, id]);
+            await con.oneOrNone(`UPDATE "${tbName}" SET "Balance" = $1 WHERE "User_id" = $2`, [price, id]);
             return true;
         }
         else 
