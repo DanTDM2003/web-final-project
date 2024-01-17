@@ -10,16 +10,17 @@ const AdminMiddleware = require('../middlewares/Admin.js');
 
 router.get('/dashboard', AdminMiddleware, async (req, res) => {
     const users = await Users.findAll();
+    console.log("users:", users);
     const products = await Products.fetchAll();
     const categories = await Categories.fetchAll();
     const bills = await Payment.fetchAll();
     delete bills.Password;
 
     let statistics = [];
-    for(let i = 0; i < 12; i++){
-        let count = await Payment.count(i+1);
+    for (let i = 0; i < 12; i++) {
+        let count = await Payment.count(i + 1);
         statistics.push(count)
-    }           
+    }
     res.render('admin/index', {
         title: 'Dashboard',
         login: req.isAuthenticated(),

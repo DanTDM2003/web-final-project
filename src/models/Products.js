@@ -19,12 +19,9 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
-  
+
   static async fetchAllNewest(conditions = [``, ``]) {
     let con = null;
     try {
@@ -33,12 +30,9 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
-  
+
   static async fetchAllPriceUp(conditions = [``, ``]) {
     let con = null;
     try {
@@ -47,12 +41,9 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
-  
+
   static async fetchAllPriceDown(conditions = [``, ``]) {
     let con = null;
     try {
@@ -61,9 +52,6 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
 
@@ -86,9 +74,6 @@ module.exports = class Product {
       return product;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
 
@@ -100,9 +85,6 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
 
@@ -115,9 +97,6 @@ module.exports = class Product {
       return;
     } catch (error) {
       throw error;
-    } finally {
-      if (con)
-        con.done();
     }
   }
 
@@ -129,10 +108,6 @@ module.exports = class Product {
       return;
     } catch (error) {
       throw error;
-    } finally {
-      if (con) {
-        con.done();
-      }
     }
   }
 
@@ -165,10 +140,6 @@ module.exports = class Product {
       });
     } catch (error) {
       throw error;
-    } finally {
-      if (con) {
-        con.done();
-      }
     }
   }
 }

@@ -41,7 +41,7 @@ module.exports = class User {
             }
         }
     }
-    
+
     static async findById(id) {
         let con = null;
         try {
