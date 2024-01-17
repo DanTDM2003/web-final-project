@@ -19,7 +19,11 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async fetchAllNewest(conditions = [``, ``]) {
@@ -30,21 +34,14 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async fetchAllPriceUp(conditions = [``, ``]) {
-    let con = null;
-    try {
-      con = await db.connection.connect();
-      const products = await con.any(`SELECT "${tbName}".id AS product_id, "${tbName}"."Name" AS product_name, * FROM ("${tbName}" JOIN "Categories" ON "${tbName}"."Category_id" = "Categories".id) WHERE ("${tbName}"."Name" ILIKE '%' || $1 || '%') AND ("Categories"."Name" ILIKE '%' || $2 || '%') ORDER BY "${tbName}"."Price" DESC`, conditions);
-      return products;
-    } catch (error) {
-      throw error;
-    }
-  }
-
-  static async fetchAllPriceDown(conditions = [``, ``]) {
     let con = null;
     try {
       con = await db.connection.connect();
@@ -52,7 +49,26 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
+  }
+
+  static async fetchAllPriceDown(conditions = [``, ``]) {
+    let con = null;
+    try {
+      con = await db.connection.connect();
+      const products = await con.any(`SELECT "${tbName}".id AS product_id, "${tbName}"."Name" AS product_name, * FROM ("${tbName}" JOIN "Categories" ON "${tbName}"."Category_id" = "Categories".id) WHERE ("${tbName}"."Name" ILIKE '%' || $1 || '%') AND ("Categories"."Name" ILIKE '%' || $2 || '%') ORDER BY "${tbName}"."Price" DESC`, conditions);
+      return products;
+    } catch (error) {
+      throw error;
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async getMaxID() {
@@ -63,7 +79,11 @@ module.exports = class Product {
       return maxID;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async fetch(id) {
@@ -74,7 +94,11 @@ module.exports = class Product {
       return product;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async fetchRelatedProducts(id) {
@@ -85,7 +109,11 @@ module.exports = class Product {
       return products;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async add(obj) {
@@ -97,7 +125,11 @@ module.exports = class Product {
       return;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async delete(id) {
@@ -108,7 +140,11 @@ module.exports = class Product {
       return;
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 
   static async updateListProducts(products) {
@@ -140,6 +176,10 @@ module.exports = class Product {
       });
     } catch (error) {
       throw error;
-    }
+    } finally {
+      if (con) {
+          con.done();
+      }
+  }
   }
 }

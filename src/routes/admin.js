@@ -10,7 +10,6 @@ const AdminMiddleware = require('../middlewares/Admin.js');
 
 router.get('/dashboard', AdminMiddleware, async (req, res) => {
     const users = await Users.findAll();
-    console.log("users:", users);
     const products = await Products.fetchAll();
     const categories = await Categories.fetchAll();
     const bills = await Payment.fetchAll();
