@@ -91,10 +91,12 @@
                 dataType: 'json',
                 success: function (response) {
                     if(response&&response.success){
-                        $('#success').html(response.success)
+                        $('#success').html(response.success);
+                        $('#error').remove();
                         $('#content').remove();
                     } else {
-                        $('#error').html(response.error)
+                        $('#error').html(response.error);
+                        $('#success').remove();
                     }
                 },
                 error: function (error) {
