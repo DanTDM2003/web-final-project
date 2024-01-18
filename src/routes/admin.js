@@ -11,6 +11,7 @@ const AdminMiddleware = require('../middlewares/Admin.js');
 router.get('/dashboard', AdminMiddleware, async (req, res) => {
     const users = await Users.findAll();
     const products = await Products.fetchAll();
+    console.log("product:", products);
     const categories = await Categories.fetchAll();
     const bills = await Payment.fetchAll();
     delete bills.Password;

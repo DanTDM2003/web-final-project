@@ -21,9 +21,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async fetchAllNewest(conditions = [``, ``]) {
@@ -36,9 +36,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async fetchAllPriceUp(conditions = [``, ``]) {
@@ -51,9 +51,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async fetchAllPriceDown(conditions = [``, ``]) {
@@ -66,9 +66,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async getMaxID() {
@@ -81,9 +81,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async fetch(id) {
@@ -96,9 +96,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async fetchRelatedProducts(id) {
@@ -111,9 +111,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async add(obj) {
@@ -127,9 +127,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async delete(id) {
@@ -142,9 +142,9 @@ module.exports = class Product {
       throw error;
     } finally {
       if (con) {
-          con.done();
+        con.done();
       }
-  }
+    }
   }
 
   static async updateListProducts(products) {
@@ -176,10 +176,6 @@ module.exports = class Product {
       });
     } catch (error) {
       throw error;
-    } finally {
-      if (con) {
-          con.done();
-      }
-  }
+    }
   }
 }

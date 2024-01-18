@@ -88,10 +88,6 @@ module.exports = class User {
             });
         } catch (error) {
             throw error;
-        } finally {
-            if (con) {
-                con.done();
-            }
         }
     }
 
